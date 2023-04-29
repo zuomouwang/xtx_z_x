@@ -1,11 +1,6 @@
 <template>
   <div>
     <p @click="count++">{{ count }}</p>
-    <h1>wahah</h1>
-    <h2>{{ count }}</h2>
-    <h2>www</h2>
-    <a href="#">aldlsald</a>
-    <h3>wah</h3>
   </div>
 </template>
 
