@@ -49,7 +49,6 @@ export default {
   background-color: #333;
   width: 100%;
   .wrapper {
-    margin: 0 auto;
     height: 50px;
     position: relative;
     ul {
