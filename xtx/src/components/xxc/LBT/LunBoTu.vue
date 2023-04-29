@@ -1,6 +1,8 @@
 <template>
-  <div class="LBT-container wrapper">
-    <TuTu></TuTu>
+  <div class="LBT-container">
+    <div class="wrapper">
+      <TuTu></TuTu>
+    </div>
   </div>
 </template>
 
@@ -15,4 +17,9 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.LBT-container {
+  height: 500px;
+  background-color: #f5f5f5;
+}
+</style>
