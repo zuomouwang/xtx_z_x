@@ -1,17 +1,17 @@
 <template>
   <div>
-    <AddCount></AddCount>
+    <Topcom userName="左兴旺"></Topcom>
   </div>
 </template>
 
 <script>
-import AddCount from '../components/zxw/AddCount.vue'
+import Topcom from '../components/zxw/TopCom.vue'
 export default {
   data() {
     return {}
   },
   components: {
-    AddCount
+    Topcom
   }
 }
 </script>
