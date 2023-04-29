@@ -12,6 +12,10 @@ export default {
   },
   components: {
     Topcom
+  },
+  async created() {
+    const { data: res } = await this.$http.get('/home/goods', {})
+    console.log(res)
   }
 }
 </script>
