@@ -1,5 +1,5 @@
 <template>
-  <div class="LBT-container">
+  <div class="LBT-container wrapper">
     <TuTu></TuTu>
   </div>
 </template>

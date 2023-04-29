@@ -1,22 +1,21 @@
 <template>
   <div>
-    <AddCount></AddCount>
-    <div class="lunBoTu">
+      <Topcom userName="左兴旺"></Topcom>
       <LunBoTu></LunBoTu>
-    </div>
+
   </div>
 </template>
 
 <script>
-import AddCount from '../components/zxw/AddCount.vue'
 import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
+import Topcom from '../components/zxw/TopCom.vue'
 export default {
   data() {
     return {}
   },
   components: {
-    AddCount,
-    LunBoTu
+    LunBoTu,
+    Topcom
   }
 }
 </script>

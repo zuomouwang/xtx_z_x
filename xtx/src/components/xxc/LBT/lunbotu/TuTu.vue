@@ -24,9 +24,9 @@ export default {
 <template>
   <div class="tutu-container">
     <div class="block text-center">
-      <el-carousel height="150px">
-        <el-carousel-item v-for="item in tutu" :key="item">
-          <img :src="tutu.imgUrl" alt="" />
+      <el-carousel height="500px">
+        <el-carousel-item v-for="item in tutu" :key="item.id">
+          <img :src="item.imgUrl" alt="推荐商品图" />
         </el-carousel-item>
       </el-carousel>
     </div>

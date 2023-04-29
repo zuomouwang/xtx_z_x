@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <HomePage></HomePage>
-  </div>
+  <HomePage></HomePage>
 </template>
 
 <script>
@@ -16,4 +14,9 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less">
+.wrapper {
+  margin: 0 auto;
+  width: 1240px;
+}
+</style>
