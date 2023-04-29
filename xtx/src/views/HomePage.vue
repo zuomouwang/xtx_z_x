@@ -1,19 +1,24 @@
 <template>
   <div>
     <AddCount></AddCount>
+    <div class="lunBoTu">
+      <LunBoTu></LunBoTu>
+    </div>
   </div>
 </template>
 
 <script>
 import AddCount from '../components/zxw/AddCount.vue'
+import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 export default {
   data() {
     return {}
   },
   components: {
-    AddCount
+    AddCount,
+    LunBoTu
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
