@@ -4,6 +4,7 @@
     <h1>wahah</h1>
     <h2>{{ count }}</h2>
     <h2>www</h2>
+    <h3>wah</h3>
   </div>
 </template>
 
