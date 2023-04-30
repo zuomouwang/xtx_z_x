@@ -6,6 +6,7 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import axios from 'axios'
 import './base.css'
+import './my-styles.scss'
 const app = createApp(App)
 
 app.use(router)
