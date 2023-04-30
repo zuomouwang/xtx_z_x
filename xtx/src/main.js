@@ -10,7 +10,7 @@ const app = createApp(App)
 
 app.use(router)
 
-axios.defaults.baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net'
+axios.defaults.baseURL = 'https://apipc-xiaotuxian-front.itheima.net/'
 app.config.globalProperties.$http = axios
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

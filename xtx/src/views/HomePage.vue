@@ -1,25 +1,32 @@
 <template>
   <div>
-      <Topcom userName="左兴旺"></Topcom>
-      <LunBoTu></LunBoTu>
-
+    <Topcom userName="左兴旺"></Topcom>
+    <HeadeCom :data="headdata"></HeadeCom>
+    <LunBoTu></LunBoTu>
   </div>
 </template>
 
 <script>
 import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import Topcom from '../components/zxw/TopCom.vue'
+import HeadeCom from '../components/zxw/HeaderCom.vue'
 export default {
   data() {
-    return {}
+    return {
+      headdata: {}
+    }
   },
   components: {
     LunBoTu,
-    Topcom
+    Topcom,
+    HeadeCom
   },
-  async created() {
-    const { data: res } = await this.$http.get('/home/goods', {})
-    console.log(res)
+  created() {
+    this.$http.get('/home/category/head', {}).then(value => {
+      const { data: res } = value
+      this.headdata = res.result
+      return res.result
+    })
   }
 }
 </script>
