@@ -1,8 +1,9 @@
 <template>
   <div>
-    <Topcom userName="左兴旺"></Topcom>
-    <HeadeCom :data="headdata"></HeadeCom>
+    <Topcom :userName="name"></Topcom>
+    <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
+    <footer-com></footer-com>
   </div>
 </template>
 
@@ -14,13 +15,14 @@ import bus from '../eventBus'
 export default {
   data() {
     return {
-      headdata: {}
+      name: undefined,
+      headdata: []
     }
   },
   components: {
     LunBoTu,
     Topcom,
-    HeadeCom
+    HeadeCom,
   },
   created() {
     this.$http.get('/home/category/head', {}).then(value => {

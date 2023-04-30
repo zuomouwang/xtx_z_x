@@ -65,6 +65,9 @@ export default {
           color: #dcdcdc;
           font-size: 14px;
         }
+        a:hover {
+          color: #27ba9b;
+        }
       }
       li:last-child {
         a {
