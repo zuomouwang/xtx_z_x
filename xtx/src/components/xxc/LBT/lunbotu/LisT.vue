@@ -1,8 +1,8 @@
 <template>
   <div class="List-container" @pointerleave="pointer_out">
     <div class="List">
-      <ul class="ul-list" v-for="(item, index) in data" :key="item.id">
-        <li class="li-list" :indexLs="index" @pointerenter="pointer_in">
+      <ul class="ul-list">
+        <li class="li-list" v-for="(item, index) in data" :key="item.id" :indexLs="index" @pointerenter="pointer_in">
           <!---@pointerenter="pointer_in" @pointerleave="pointer_out"-->
           <a :href="item.href">{{ item.name }}</a>
           <a :href="item.href">{{ item.children[0].name }}</a>
@@ -15,8 +15,8 @@
         热门推荐
         <span>asdasdasdsa</span>
       </h4>
-      <ul class="ul-goods" v-for="item in list" :key="item.id">
-        <li class="li-goods">
+      <ul class="ul-goods" >
+        <li class="li-goods" v-for="item in list" :key="item.id">
           <a href="">
             <img :src="item.picture" alt="" />
             <div></div>
@@ -71,14 +71,14 @@ export default {
     background-color: rgba($color: #141516, $alpha: 0.8);
     .ul-list {
       .li-list {
-        padding: 0px 20px;
+        padding: 0px 15px;
         width: 250px;
         height: 50px;
         line-height: 50px;
         transition: all 0.5s;
         &:hover {
           background-color: #27ba9b;
-          padding: 0px 25px;
+          padding: 0px 20px;
         }
         a {
           padding-left: 8px;
@@ -111,7 +111,7 @@ export default {
       .li-goods {
         width: 310px;
         height: 120px;
-        margin-right: 15px;
+        margin-right: 10px;
         margin-bottom: 15px;
         border: 1px solid #eee;
         border-radius: 4px;
