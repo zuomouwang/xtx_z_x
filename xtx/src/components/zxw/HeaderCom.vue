@@ -6,15 +6,17 @@
       </div>
       <div class="list">
         <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave" v-load="flag">
-          <a href="javaScript:;">{{ i.name }}</a>
+          <a href="javaScript:;" @click="click_bdb" :class="[status_isbd[index] ? 'checked' : '']">{{ i.name }}</a>
           <el-collapse-transition>
             <div class="options" v-show="status[index]">
               <ul class="center">
                 <li v-for="c in i.children" :key="c.id">
-                  <div class="img">
-                    <img :src="c.picture" alt="" />
-                  </div>
-                  <p>{{ c.name }}</p>
+                  <a href="javaScript:;">
+                    <div class="img">
+                      <img :src="c.picture" alt="" />
+                    </div>
+                    <p>{{ c.name }}</p>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -71,14 +73,32 @@ export default {
         return true
       }
       return false
+    },
+    status_isbd: {
+      get() {
+        if (this.prodata.length !== 0) {
+          return [true, false, false, false, false, false, false, false, false]
+        }
+        return [false, false, false, false, false, false, false, false, false]
+      },
+      set(value) {
+        console.log(value)
+        return value
+      }
     }
   },
   methods: {
+    click_bdb(e) {
+      if (!this.flag) return
+      let checked = document.querySelector('.head .wrapper .list li .checked')
+      checked.classList.remove('checked')
+      e.target.classList.add('checked')
+    },
     enter(e) {
       if (e.target.children[0].innerText === '首页') return
       clearTimeout(timer)
       e.target.children[1].style.cssText = ` box-shadow: 0px -1px 4px -1px #ccc;`
-      this.status.splice(e.target.getAttribute('index'), e.target.getAttribute('index') + 1, true)
+      this.status.splice(e.target.getAttribute('index'), 1, true)
     },
     leave() {
       timer = setTimeout(() => {
@@ -122,11 +142,15 @@ export default {
         margin: 0 20px;
         a {
           display: block;
-          min-width: 40px;
+          min-width: 35px;
           height: 20px;
           padding-bottom: 6px;
+          text-align: center;
         }
         a:hover {
+          border-bottom: 1px solid #27ba9b;
+        }
+        .checked {
           border-bottom: 1px solid #27ba9b;
         }
         .options {
@@ -144,15 +168,26 @@ export default {
             box-shadow: 0px -1px 4px -1px #ccc;
             padding-left: 100px;
             li {
-              .img {
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                overflow: hidden;
-                img {
-                  width: 100%;
-                  height: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              a {
+                width: 100%;
+                height: 100%;
+                .img {
+                  width: 60px;
+                  height: 60px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  img {
+                    width: 100%;
+                    height: 100%;
+                  }
                 }
+              }
+              a:hover {
+                color: #27ba9b;
+                border: 0 solid #000;
               }
             }
           }
