@@ -25,18 +25,14 @@ app.use(ElementPlus)
 app.directive('load', {
   
   mounted(el, binding) {
-    // console.log(binding.value)
     if (binding.value===false) { 
       el.classList.add('loading')
-      console.log(binding.value);
     }
-
   },
     updated(el,binding) {
     // 元素更新时执行的逻辑
       if (binding.value === true) { 
         el.classList.remove('loading')
-        console.log(binding.value);
       }
   },
 })

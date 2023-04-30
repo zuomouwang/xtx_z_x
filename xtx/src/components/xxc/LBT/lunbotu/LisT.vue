@@ -1,12 +1,12 @@
 <template>
   <div class="List-container" @pointerleave="pointer_out">
     <div class="List">
-      <ul class="ul-list" v-for="item in data" :key="item.id">
-        <li class="li-list" :listId="item.id"  @pointerenter="pointer_in">
+      <ul class="ul-list" v-for="(item, index) in data" :key="item.id">
+        <li class="li-list" :indexLs="index" @pointerenter="pointer_in">
           <!---@pointerenter="pointer_in" @pointerleave="pointer_out"-->
-          <a :href="item.href">{{ item.title }}</a>
-          <a :href="item.href">{{ item.litter_title1 }}</a>
-          <a :href="item.href">{{ item.litter_title2 }}</a>
+          <a :href="item.href">{{ item.name }}</a>
+          <a :href="item.href">{{ item.children[0].name }}</a>
+          <a v-if="item.children[1] !== undefined" :href="item.href">{{ item.children[1].name }}</a>
         </li>
       </ul>
     </div>
@@ -15,53 +15,51 @@
         热门推荐
         <span>asdasdasdsa</span>
       </h4>
-      <ul v-for="item in 5" :key="item.id">
-        <li class="test">wahh</li>
+      <ul class="ul-goods" v-for="item in list" :key="item.id">
+        <li class="li-goods">
+          <a href="">
+            <img :src="item.picture" alt="" />
+            <div></div>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import bus from '../../../../eventBus'
 export default {
-  props:['listId'],
+  props: ['indexLs'],
   data() {
     return {
-      data: [
-        {
-          num: { 花: '水仙花', 草: '兰草', 树: '大树' },
-          id: 1,
-          title: '居家',
-          litter_title1: '茶咖',
-          litter_title2: '茶咖',
-          href: 'javaScript:;'
-        },
-        { num: {}, id: 2, title: '美食', litter_title1: '黑猪', litter_title2: '黑猪', href: 'javaScript:;' },
-        { num: {}, id: 3, title: '服饰', litter_title1: '拖鞋', litter_title2: '拖鞋', href: 'javaScript:;' },
-        { num: {}, id: 4, title: '母婴', litter_title1: 'T恤', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 5, title: '个护', litter_title1: '清洁', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 6, title: '严选', litter_title1: '卫浴用品', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 7, title: '数码', litter_title1: '影音', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 8, title: '运动', litter_title1: '登机箱', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 9, title: '杂项', litter_title1: '乐器杂项', litter_title2: '居家', href: 'javaScript:;' },
-        { num: {}, id: 10, title: '杂项', litter_title1: '乐器杂项', litter_title2: '居家', href: 'javaScript:;' }
-      ]
+      data: [],
+      list: []
     }
   },
   methods: {
     pointer_in(e) {
+      // console.log(this.data)
       this.$refs.show.style.display = 'block'
-      console.log(e.target.getAttribute('listId'))
+      this.list = this.data[e.target.getAttribute('indexLs')].goods
+      console.log(this.list)
     },
     pointer_out() {
       this.$refs.show.style.display = 'none'
     }
+  },
+  created() {
+    bus.on('getValue', result => {
+      this.data = result
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .List-container {
+  position: absolute;
+  top: 0;
   width: 1240px;
   height: 500px;
   .List {
@@ -93,9 +91,6 @@ export default {
       }
     }
   }
-  .list_active {
-    background-color: red !important;
-  }
   .ListAll {
     position: absolute;
     top: 0px;
@@ -110,10 +105,29 @@ export default {
       font-weight: 400;
       line-height: 80px;
     }
-    .test {
-      width: 200px;
-      height: 50px;
-      background-clip: pink;
+    .ul-goods {
+      display: flex;
+      flex-wrap: wrap;
+      .li-goods {
+        width: 310px;
+        height: 120px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        background: #fff;
+        a {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          padding: 10px;
+          img {
+            width: 95px;
+            height: 95px;
+          }
+        }
+      }
     }
   }
 }
