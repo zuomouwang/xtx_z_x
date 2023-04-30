@@ -1,28 +1,35 @@
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
-      tutu: []
+      tutu: [],
+      status: false
     }
   },
   methods: {
     async initBookList() {
-      const { data: tu } = await axios.get('http://pcapi-xiaotuxian-front-devtest.itheima.net/home/banner')
-      this.tutu = tu.result
-      console.log(tu.result)
-    },
-    test() {
-      console.log(this.tutu.imgUrl)
+      const data = await this.$http.get('/home/banner')
+      if (data.status === 200) {
+        this.status = true
+      }
+      this.tutu = data.data.result
     }
   },
   created() {
     this.initBookList()
   }
+  // directives: {
+  //   load(el) {
+  //     console.log(el)
+  //     // console.log(getComputedStyle(el, null).backgroundColor);
+  //     // el.style.cssText = `height: 500px;background-color: aqua; `
+  //     el.classList.add('loading')
+  //   }
+  // }
 }
 </script>
 <template>
-  <div class="tutu-container">
+  <div class="tutu-container" v-load>
     <div class="block text-center">
       <el-carousel height="500px">
         <el-carousel-item v-for="item in tutu" :key="item.id">
@@ -33,14 +40,6 @@ export default {
   </div>
 </template>
 <style lang="less" scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-  text-align: center;
-}
-
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }

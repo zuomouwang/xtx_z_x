@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="List-container">
+
+  </div>
 </template>
 
 <script>
@@ -10,4 +12,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.List-container{
+  width: 250px;
+  height: 500px;
+  background-color: lightpink;
+}
+</style>
+
