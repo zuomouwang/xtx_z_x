@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Topcom userName="左兴旺"></Topcom>
+    <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
   </div>
@@ -13,6 +13,7 @@ import HeadeCom from '../components/zxw/HeaderCom.vue'
 export default {
   data() {
     return {
+      name: undefined,
       headdata: []
     }
   },

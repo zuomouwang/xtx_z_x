@@ -9,7 +9,7 @@
           <a href="javaScript:;">{{ i.name }}</a>
           <el-collapse-transition>
             <div class="options" v-show="status[index]">
-              <ul class="wrapper">
+              <ul class="center">
                 <li v-for="c in i.children" :key="c.id">
                   <div class="img">
                     <img :src="c.picture" alt="" />
@@ -21,8 +21,16 @@
           </el-collapse-transition>
         </li>
       </div>
-      <div class="input"></div>
-      <div class="cart"></div>
+      <div class="input">
+        <el-icon><Search /></el-icon>
+        <input type="text" placeholder="搜一搜" />
+      </div>
+      <div class="cart">
+        <a href="javaScript:;">
+          <el-icon class="big"><ShoppingCart /></el-icon>
+          <em>0</em>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -91,6 +99,7 @@ export default {
     display: flex;
     height: 100%;
     align-items: center;
+    justify-content: space-between;
     .pic {
       width: 200px;
       height: 100%;
@@ -110,7 +119,7 @@ export default {
       position: relative;
       li {
         list-style: none;
-        margin: 0 15px;
+        margin: 0 20px;
         a {
           display: block;
           min-width: 40px;
@@ -123,10 +132,14 @@ export default {
         .options {
           position: absolute;
           z-index: 999;
-          left: -200px;
+          left: -213px;
           top: 45px;
-          .wrapper {
+          .center {
+            margin: 0 auto;
+            width: 1240px;
             height: 120px;
+            display: flex;
+            align-items: center;
             background-color: #fff;
             box-shadow: 0px -1px 4px -1px #ccc;
             padding-left: 100px;
@@ -143,6 +156,49 @@ export default {
               }
             }
           }
+        }
+      }
+    }
+    .input {
+      width: 170px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: #ccc 1px 1px 4px 0px;
+      i {
+        margin-left: 3px;
+      }
+      input {
+        color: #ccc;
+        margin-left: 5px;
+        width: 140px;
+        height: 20px;
+      }
+    }
+    .cart {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      // background-color: red;
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        .big {
+          font-size: 30px;
+        }
+        em {
+          width: 15px;
+          height: 15px;
+          position: absolute;
+          right: -7px;
+          top: -4px;
+          background-color: red;
+          color: #fff;
+          font-size: 13px;
+          text-align: center;
+          line-height: 15px;
+          border-radius: 50%;
         }
       }
     }
