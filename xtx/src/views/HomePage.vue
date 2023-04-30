@@ -1,7 +1,7 @@
 <template>
   <div>
     <Topcom userName="左兴旺"></Topcom>
-    <HeadeCom :data="headdata"></HeadeCom>
+    <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
   </div>
 </template>
@@ -13,7 +13,7 @@ import HeadeCom from '../components/zxw/HeaderCom.vue'
 export default {
   data() {
     return {
-      headdata: {}
+      headdata: []
     }
   },
   components: {

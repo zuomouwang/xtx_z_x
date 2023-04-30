@@ -5,10 +5,7 @@
         <a href="javaScript:;"></a>
       </div>
       <div class="list">
-        <li>
-          <a href="javaScript:;">首页</a>
-        </li>
-        <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave">
+        <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave" v-load>
           <a href="javaScript:;">{{ i.name }}</a>
           <el-collapse-transition>
             <div class="options" v-show="status[index]">
@@ -35,16 +32,42 @@ let timer = 0
 export default {
   data() {
     return {
-      status: [false, false, false, false, false, false, false, false, false]
+      status: [false, false, false, false, false, false, false, false, false],
+      defdata: [
+        { id: '1', name: '' },
+        { id: '2', name: '' },
+        { id: '3', name: '' },
+        { id: '4', name: '' },
+        { id: '5', name: '' },
+        { id: '6', name: '' },
+        { id: '7', name: '' },
+        { id: '8', name: '' },
+        { id: '9', name: '' },
+        { id: '10', name: '' }
+      ]
     }
   },
   props: {
-    data: {
-      default: []
+    prodata: {}
+  },
+  computed: {
+    data() {
+      if (this.prodata.length !== 0) {
+        let value = [{ id: 999, name: '首页' }].concat(this.prodata)
+        return value
+      }
+      return this.defdata
+    },
+    flag() {
+      if (this.prodata.length !== 0) {
+        return true
+      }
+      return false
     }
   },
   methods: {
     enter(e) {
+      if (e.target.children[0].innerText === '首页') return
       clearTimeout(timer)
       e.target.children[1].style.cssText = ` box-shadow: 0px -1px 4px -1px #ccc;`
       this.status.splice(e.target.getAttribute('index'), e.target.getAttribute('index') + 1, true)
@@ -54,7 +77,8 @@ export default {
         this.status = [false, false, false, false, false, false, false, false, false]
       }, 10)
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 
@@ -86,8 +110,11 @@ export default {
       position: relative;
       li {
         list-style: none;
-        margin: 0 25px;
+        margin: 0 15px;
         a {
+          display: block;
+          min-width: 40px;
+          height: 20px;
           padding-bottom: 6px;
         }
         a:hover {
