@@ -5,7 +5,10 @@
         <a href="javaScript:;"></a>
       </div>
       <div class="list">
-        <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave" v-load>
+        <li>
+          <a href="javaScript:;">首页</a>
+        </li>
+        <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave">
           <a href="javaScript:;">{{ i.name }}</a>
           <el-collapse-transition>
             <div class="options" v-show="status[index]">

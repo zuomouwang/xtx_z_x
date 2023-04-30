@@ -29,7 +29,7 @@ export default {
 }
 </script>
 <template>
-  <div class="tutu-container" v-load>
+  <div class="tutu-container" v-load="status">
     <div class="block text-center">
       <el-carousel height="500px">
         <el-carousel-item v-for="item in tutu" :key="item.id">

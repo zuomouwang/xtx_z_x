@@ -23,9 +23,21 @@ app.use(ElementPlus)
 // })
 // 自定义全局指令
 app.directive('load', {
-  mounted(el) {
-    el.classList.add('loading')
-  }
-})
+  
+  mounted(el, binding) {
+    // console.log(binding.value)
+    if (binding.value===false) { 
+      el.classList.add('loading')
+      console.log(binding.value);
+    }
 
+  },
+    updated(el,binding) {
+    // 元素更新时执行的逻辑
+      if (binding.value === true) { 
+        el.classList.remove('loading')
+        console.log(binding.value);
+      }
+  },
+})
 app.mount('#app')
