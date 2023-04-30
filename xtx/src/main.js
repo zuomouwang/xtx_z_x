@@ -7,6 +7,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import axios from 'axios'
 import './base.css'
 import './my-styles.scss'
+import '../public/font/iconfont.css'
 const app = createApp(App)
 
 app.use(router)
@@ -23,21 +24,21 @@ app.use(ElementPlus)
 // })
 // 自定义全局指令
 app.directive('load', {
-  
+
   mounted(el, binding) {
     // console.log(binding.value)
-    if (binding.value===false) { 
+    if (binding.value === false) {
       el.classList.add('loading')
       console.log(binding.value);
     }
 
   },
-    updated(el,binding) {
+  updated(el, binding) {
     // 元素更新时执行的逻辑
-      if (binding.value === true) { 
-        el.classList.remove('loading')
-        console.log(binding.value);
-      }
+    if (binding.value === true) {
+      el.classList.remove('loading')
+      console.log(binding.value);
+    }
   },
 })
 app.mount('#app')

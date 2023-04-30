@@ -3,6 +3,7 @@
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
+    <footer-com></footer-com>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import Topcom from '../components/zxw/TopCom.vue'
 import HeadeCom from '../components/zxw/HeaderCom.vue'
+import FooterCom from '../components/zxw/FooterCom.vue'
 export default {
   data() {
     return {
@@ -20,7 +22,8 @@ export default {
   components: {
     LunBoTu,
     Topcom,
-    HeadeCom
+    HeadeCom,
+    FooterCom
   },
   created() {
     this.$http.get('/home/category/head', {}).then(value => {
