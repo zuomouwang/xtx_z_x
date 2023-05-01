@@ -1,11 +1,12 @@
 <template>
   <div class="List-container" @pointerleave="pointer_out">
     <div class="List">
-      <ul class="ul-list" v-load="status">        <!-- indexLs 给li绑定一个元素下标 -->
+      <ul class="ul-list" v-load="status">
+        <!-- indexLs 给li绑定一个元素下标 -->
         <li class="li-list" v-for="(item, index) in data" :key="item.id" :indexLs="index" @pointerenter="pointer_in">
-          <a href="javaScript:;" >{{ item.name }}</a>
-          <a href="javaScript:;" >{{ item.children[0].name }}</a>
-          <a v-if="item.children[1] !== undefined" href="javaScript:;" >{{ item.children[1].name }}</a>
+          <a href="javaScript:;">{{ item.name }}</a>
+          <a href="javaScript:;">{{ item.children[0].name }}</a>
+          <a v-if="item.children[1] !== undefined" href="javaScript:;">{{ item.children[1].name }}</a>
         </li>
       </ul>
     </div>
@@ -84,10 +85,14 @@ export default {
     position: absolute;
     top: 0;
     // left: 0;
+    display: flex;
     width: 250px;
     height: 500px;
     background-color: rgba(#141516, 0.8);
     .ul-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       width: 250px;
       height: 500px;
       .li-list {
