@@ -3,7 +3,7 @@
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
-    <footer-com></footer-com>
+    <!-- <footer-com></footer-com> -->
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
   created() {
     this.$http.get('/home/category/head', {}).then(value => {
       const { data: res } = value
-      bus.emit('getValue', res.result)
+      bus.emit('getValue', value)
       this.headdata = res.result
       return res.result
     })

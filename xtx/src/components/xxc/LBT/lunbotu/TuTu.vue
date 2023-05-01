@@ -1,3 +1,16 @@
+<template>
+  <div class="tutu-container" v-load="status">
+    <div class="block text-center">
+      <el-carousel height="500px">
+        <el-carousel-item v-for="item in tutu" :key="item.id">
+          <a href="javaScript:;">
+            <img :src="item.imgUrl" alt="推荐商品图" />
+          </a>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+  </div>
+</template>
 <script>
 export default {
   data() {
@@ -18,27 +31,8 @@ export default {
   created() {
     this.initBookList()
   }
-  // directives: {
-  //   load(el) {
-  //     console.log(el)
-  //     // console.log(getComputedStyle(el, null).backgroundColor);
-  //     // el.style.cssText = `height: 500px;background-color: aqua; `
-  //     el.classList.add('loading')
-  //   }
-  // }
 }
 </script>
-<template>
-  <div class="tutu-container" v-load="status">
-    <div class="block text-center">
-      <el-carousel height="500px">
-        <el-carousel-item v-for="item in tutu" :key="item.id">
-          <img :src="item.imgUrl" alt="推荐商品图" />
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-  </div>
-</template>
 <style lang="less" scoped>
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
