@@ -12,7 +12,7 @@
     <div class="ListAll" ref="show">
       <div class="h">
         <h4>分类推荐</h4>
-        <a href="" v-for="(item, index) in children" :key="item.id">{{ children[index].name }}</a>
+        <a href="javaScript:;" v-for="(item, index) in children" :key="item.id">{{ children[index].name }}</a>
       </div>
       <ul class="ul-goods">
         <li class="li-goods" v-for="item in goods" :key="item.id">
@@ -78,8 +78,8 @@ export default {
 .List-container {
   position: absolute;
   top: 0;
-  width: 1240px;
-  height: 500px;
+  // width: 1240px;
+  // height: 500px;
   .List {
     position: absolute;
     top: 0;
