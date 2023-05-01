@@ -68,7 +68,6 @@ export default {
   async created() {
     const { data: res } = await this.$http('/home/special')
     if (res.msg === '操作成功') {
-      console.log(res)
       this.res = res.result
       this.flag = true
     }
@@ -83,6 +82,7 @@ export default {
   background-color: var(--hui);
   .wrapper {
     .top {
+      margin-bottom: 10px;
       width: 100%;
       height: 80px;
       display: flex;
@@ -91,6 +91,7 @@ export default {
       h2 {
         font-weight: normal;
         font-size: 30px;
+        cursor: default;
       }
       a {
         display: flex;
