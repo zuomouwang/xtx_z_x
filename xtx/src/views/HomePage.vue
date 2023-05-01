@@ -3,7 +3,8 @@
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
-    <!-- <footer-com></footer-com> -->
+    <LatestTopic></LatestTopic>
+    <footer-com></footer-com>
   </div>
 </template>
 
@@ -12,6 +13,8 @@ import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import Topcom from '../components/zxw/TopCom.vue'
 import HeadeCom from '../components/zxw/HeaderCom.vue'
 import bus from '../eventBus'
+import FooterCom from '../components/zxw/FooterCom.vue'
+import LatestTopic from '../components/zxw/LatestTopic.vue'
 export default {
   data() {
     return {
@@ -23,6 +26,8 @@ export default {
     LunBoTu,
     Topcom,
     HeadeCom,
+    FooterCom,
+    LatestTopic
   },
   created() {
     this.$http.get('/home/category/head', {}).then(value => {
