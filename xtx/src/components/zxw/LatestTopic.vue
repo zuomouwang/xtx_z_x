@@ -118,6 +118,9 @@ export default {
           width: 100%;
           height: 290px;
           position: relative;
+          img {
+            object-fit: cover;
+          }
           .cover {
             position: absolute;
             bottom: 0;

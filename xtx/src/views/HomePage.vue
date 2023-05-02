@@ -22,7 +22,12 @@ export default {
     return {
       name: undefined,
       headdata: [],
-      productdata: []
+      productdata: [
+        { id: 666, goods: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }] },
+        { id: 666, goods: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }] },
+        { id: 666, goods: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }] },
+        { id: 666, goods: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }] }
+      ]
     }
   },
   components: {
@@ -42,7 +47,7 @@ export default {
     })
     const { data: res } = await this.$http.get('/home/goods')
     this.productdata = res.result
-    console.log(res.result[0].picture)
+    console.log(res)
   }
 }
 </script>

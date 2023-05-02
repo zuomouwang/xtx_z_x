@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <div class="wrapper">
+    <div class="wrapper" v-if="flag">
       <div class="top">
         <h1>{{ data.name }}</h1>
         <div class="right">
@@ -18,6 +18,10 @@
         <div class="left">
           <a href="javascript:;">
             <img :src="data.picture" :alt="data.name" />
+            <div class="tip">
+              <span>{{ data.name }}馆</span>
+              <span>{{ data.saleInfo }}</span>
+            </div>
           </a>
         </div>
         <div class="right">
@@ -42,16 +46,40 @@
         </div>
       </div>
     </div>
+    <div class="wrapper" v-else>
+      <div class="top">
+        <h1 v-load="flag"></h1>
+        <div class="right" v-load="flag"></div>
+      </div>
+      <div class="bottom">
+        <div class="left" v-load="flag"></div>
+        <div class="right">
+          <ul>
+            <li v-for="i in data.goods" :key="i.id" v-load="flag"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {}
+    return {
+      temp: false
+    }
+  },
+  computed: {
+    flag() {
+      //
+      return this.data.name ? true : false
+    }
   },
   props: {
-    data: {}
+    data: {
+      default: {}
+    }
   }
 }
 </script>
@@ -71,10 +99,14 @@ export default {
       justify-content: space-between;
       align-items: center;
       h1 {
+        min-width: 80px;
+        min-height: 30px;
         font-weight: normal;
         cursor: default;
       }
       .right {
+        min-width: 500px;
+        min-height: 30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -110,11 +142,34 @@ export default {
         width: 240px;
         height: 100%;
         a {
+          position: relative;
           display: block;
           width: 100%;
           height: 100%;
           img {
             object-fit: cover;
+          }
+          .tip {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            display: flex;
+            span:first-child {
+              display: block;
+              width: 76px;
+              height: 66px;
+              background-color: rgba(20, 21, 22, 0.8);
+              color: #fff;
+              text-align: center;
+              line-height: 65px;
+            }
+            span:last-child {
+              height: 66px;
+              padding: 5px;
+              line-height: 60px;
+              background-color: rgba(20, 21, 22, 0.8);
+              color: #fff;
+            }
           }
         }
       }
