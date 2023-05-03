@@ -3,12 +3,11 @@
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
     <LunBoTu></LunBoTu>
-    <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
-    <LatestTopic></LatestTopic>
-    <lun-bo-tu></lun-bo-tu>
     <PaneL></PaneL>
     <HoT></HoT>
     <ReMen></ReMen>
+    <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
+    <LatestTopic></LatestTopic>
     <footer-com></footer-com>
   </div>
 </template>
@@ -54,15 +53,15 @@ export default {
       const { data: res } = value
       this.headdata = res.result
       return res.result
-    });
-      this.$http.get('/home/index').then(value => {
-        // console.log(value)
-        bus.emit('getIndex', value)
-      });
-      this.$http.get('/home/hot').then(value => {
-        // console.log(value)
-        bus.emit('getHot', value)
-      });
+    })
+    this.$http.get('/home/index').then(value => {
+      // console.log(value)
+      bus.emit('getIndex', value)
+    })
+    this.$http.get('/home/hot').then(value => {
+      // console.log(value)
+      bus.emit('getHot', value)
+    })
     this.$http.get('/home/brand').then(value => {
       // console.log(value)
       bus.emit('getReMen', value)
