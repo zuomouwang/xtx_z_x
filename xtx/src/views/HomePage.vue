@@ -2,8 +2,9 @@
   <div>
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
-    <LunBoTu></LunBoTu>
-    <!-- <footer-com></footer-com> -->
+    <lun-bo-tu></lun-bo-tu>
+    <PaneL></PaneL>
+    <footer-com></footer-com>
   </div>
 </template>
 
@@ -11,26 +12,33 @@
 import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import Topcom from '../components/zxw/TopCom.vue'
 import HeadeCom from '../components/zxw/HeaderCom.vue'
+import FooterCom from '../components/zxw/FooterCom.vue'
+import PaneL from '../components/xxc/panel/PaneL.vue'
 import bus from '../eventBus'
 export default {
   data() {
     return {
       name: undefined,
-      headdata: []
+      headdata: [],
+      PaneLValue: []
     }
   },
   components: {
     LunBoTu,
     Topcom,
     HeadeCom,
+    FooterCom,
+    PaneL
   },
   created() {
     this.$http.get('/home/category/head', {}).then(value => {
       const { data: res } = value
-      bus.emit('getValue', value)
       this.headdata = res.result
       return res.result
-    })
+    }),
+      this.$http.get('/home/index').then(value => {
+        bus.emit('getIndex', value)
+      })
   }
 }
 </script>
