@@ -112,6 +112,10 @@ export default {
 
 <style lang="less" scoped>
 .head {
+  position: sticky;
+  z-index: 9999;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 130px;
   background-color: #fff;
@@ -236,6 +240,22 @@ export default {
           border-radius: 50%;
         }
       }
+    }
+  }
+  .fixed {
+    padding: 10px;
+    height: 80px;
+
+    background-color: #fff;
+    left: 17.5%;
+    top: 0;
+    .pic {
+      width: 200px;
+      height: 100%;
+      background-image: url(../../../public/img/logo.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 0 18px;
     }
   }
 }

@@ -5,20 +5,19 @@
       <template #small>国际经典 品质保证</template>
       <template #swith>
         <div class="swith">
-          <a href="javaScript:;" @click="shang"> &lt;</a>
-          <a href="javaScript:;" @click="xia"> &gt; </a>
+          <a href="javaScript:;" @click="shang" class="col" ref="shang">&lt;</a>
+          <a href="javaScript:;" @click="xia" ref="xia">&gt;</a>
         </div>
       </template>
     </HeadBox>
-    <div class="box">
-      <!-- <img :src="this.data[0].logo" alt="" v-if="status" />电风扇地方 -->
-      <!-- <ul v-if="status"> -->
-        <!-- <li v-for="item in data" :key="item.id"> -->
-          <!-- <a href="JavaScript:;"> -->
-            <!-- <img :src="item.picture" alt="" /> -->
-          <!-- </a>
+    <div class="box" v-load="status">
+      <ul ref="ul">
+        <li v-for="item in data" :key="item.id">
+          <a href="JavaScript:;">
+            <img :src="item.picture" alt="" />
+          </a>
         </li>
-      </ul> -->
+      </ul>
     </div>
   </div>
 </template>
@@ -38,10 +37,15 @@ export default {
   },
   methods: {
     shang() {
-      console.log('上')
+      this.$refs.xia.classList.remove('col')
+      this.$refs.shang.classList.add('col')
+      this.$refs.ul.style.transform = 'translateX(0px)'
     },
     xia() {
-      console.log('下')
+      this.$refs.shang.classList.remove('col')
+      this.$refs.xia.classList.add('col')
+      this.$refs.ul.style.transform = 'translateX(-1240px)'
+      // console.log(ul.style.left)
     }
   },
   created() {
@@ -67,23 +71,41 @@ export default {
     align-items: center;
     width: 80px;
     height: 35px;
-    background-color: aqua;
+    // background-color: aqua;
     a {
       text-align: center;
       margin: 0 5px;
       width: 26px;
       height: 20px;
+      color: #fff;
       line-height: 20px;
       border-radius: 3px;
       background-color: #27ba9b;
     }
+    .col {
+      background-color: #ccc;
+      // pointer-events: none;
+      cursor: not-allowed;
+    }
   }
+
   .box {
     display: flex;
+    width: 1240px;
     height: 345px;
+    overflow: hidden;
     ul {
       display: flex;
+      transition: all 1s;
+      background-color: aquamarine;
+
+      // transform: translateX();
       li {
+        width: 240px;
+        margin-right: 10px;
+        &:nth-child(5n) {
+          margin-right: 0px;
+        }
         a {
           img {
             width: 240px;
