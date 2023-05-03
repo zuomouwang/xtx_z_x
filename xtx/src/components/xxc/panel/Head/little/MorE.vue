@@ -1,6 +1,6 @@
 <template>
   <div class="more-container">
-    <a href="javaScript:;">查看全部 <el-icon><ArrowRight /></el-icon></a>
+    <a href="javaScript:;">查看全部<el-icon><ArrowRight /></el-icon></a>
   </div>
 </template>
 
