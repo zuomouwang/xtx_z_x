@@ -10,6 +10,16 @@
         </div>
       </template>
     </HeadBox>
+    <div class="box">
+      <!-- <img :src="this.data[0].logo" alt="" v-if="status" />电风扇地方 -->
+      <!-- <ul v-if="status"> -->
+        <!-- <li v-for="item in data" :key="item.id"> -->
+          <!-- <a href="JavaScript:;"> -->
+            <!-- <img :src="item.picture" alt="" /> -->
+          <!-- </a>
+        </li>
+      </ul> -->
+    </div>
   </div>
 </template>
 
@@ -37,8 +47,8 @@ export default {
   created() {
     //接收外部传递过来的总数据 存到data
     bus.on('getReMen', value => {
-      // this.data = value.data.result
-      console.log(value)
+      this.data = value.data.result
+      console.log(this.data[0].picture)
       if (value.status === 200) {
         this.status = true
       }
@@ -48,21 +58,40 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.swith {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 35px;
-  background-color: aqua;
-  a {
-    text-align: center;
-    margin: 0 5px;
-    width: 26px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 3px;
-    background-color: #27ba9b;
+.reMen-container {
+  height: 460px;
+  width: 1240px;
+  .swith {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 35px;
+    background-color: aqua;
+    a {
+      text-align: center;
+      margin: 0 5px;
+      width: 26px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 3px;
+      background-color: #27ba9b;
+    }
+  }
+  .box {
+    display: flex;
+    height: 345px;
+    ul {
+      display: flex;
+      li {
+        a {
+          img {
+            width: 240px;
+            height: 305px;
+          }
+        }
+      }
+    }
   }
 }
 </style>
