@@ -38,4 +38,20 @@ app.directive('load', {
       }
   }
 })
+// 自定义全局指令
+app.directive('pd', {
+
+  mounted(el, binding) {
+    if (binding.value === true) {
+      // console.log(binding.value)
+      let ps = el.querySelectorAll('p');
+      ps[1].classList.remove('price')
+      ps[1].classList.add('ms')
+      el.style.backgroundColor = "#fff"
+    }
+  },
+  updated() {
+
+  }
+})
 app.mount('#app')
