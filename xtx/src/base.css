@@ -99,3 +99,17 @@ input {
   background-size: 400% 100%;
   animation: skeleton-loading 1.2s ease-in-out infinite;
 }
+<<<<<<< HEAD
+=======
+/* 禁止复制  某些元素鼠标移入变text样式,点击出现黑线*/
+.no-select {
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+}
+>>>>>>> xxc

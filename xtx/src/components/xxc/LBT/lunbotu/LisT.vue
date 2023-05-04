@@ -64,8 +64,8 @@ export default {
   },
   created() {
     //接收外部传递过来的总数据 存到data
-    bus.on('getValue', value => {
-      this.data = value.data.result
+    bus.on('getIndex', value => {
+      this.data = value.data.result.categoryBanners
       // console.log(this.data)
       if (value.status === 200) {
         this.status = true
