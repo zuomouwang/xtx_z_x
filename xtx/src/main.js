@@ -33,9 +33,9 @@ app.directive('load', {
   },
   updated(el, binding) {
     // 元素更新时执行的逻辑
-      if (binding.value === true) { 
-        el.classList.remove('loading')
-      }
+    if (binding.value === true) {
+      el.classList.remove('loading')
+    }
   }
 })
 app.mount('#app')
