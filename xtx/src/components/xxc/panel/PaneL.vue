@@ -43,7 +43,7 @@ export default {
       // comst [ id: n] = value.data.result.categoryBanners
       this.categoryBanners = value.data.result.categoryBanners
       this.freshGoods = value.data.result.freshGoods
-      // console.log(value.data.result.categoryBanners[0].name)
+      console.log(this.freshGoods)
       if (value.status === 200) {
         this.status = true
       }

@@ -1,23 +1,25 @@
 <template>
-  <div class="reMen-container wrapper">
-    <HeadBox :status="status">
-      <template #default>热门品牌</template>
-      <template #small>国际经典 品质保证</template>
-      <template #swith>
-        <div class="swith">
-          <a href="javaScript:;" @click="shang" class="col" ref="shang">&lt;</a>
-          <a href="javaScript:;" @click="xia" ref="xia">&gt;</a>
-        </div>
-      </template>
-    </HeadBox>
-    <div class="box" v-load="status">
-      <ul ref="ul">
-        <li v-for="item in data" :key="item.id">
-          <a href="JavaScript:;">
-            <img :src="item.picture" alt="" />
-          </a>
-        </li>
-      </ul>
+  <div class="reMen-container">
+    <div class="wrapper">
+      <HeadBox :status="status" ref="head">
+        <template #default>热门品牌</template>
+        <template #small>国际经典 品质保证</template>
+        <template #swith>
+          <div class="swith">
+            <a href="javaScript:;" @click="shang" class="col" ref="shang">&lt;</a>
+            <a href="javaScript:;" @click="xia" ref="xia">&gt;</a>
+          </div>
+        </template>
+      </HeadBox>
+      <div class="box" v-load="status">
+        <ul ref="ul">
+          <li v-for="item in data" :key="item.id">
+            <a href="JavaScript:;">
+              <img :src="item.picture" alt="" />
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -52,19 +54,23 @@ export default {
     //接收外部传递过来的总数据 存到data
     bus.on('getReMen', value => {
       this.data = value.data.result
-      console.log(this.data[0].picture)
+      console.log(this.data)
+      // console.log(this.data[0].picture)
       if (value.status === 200) {
         this.status = true
       }
     })
+  },
+  mounted() {
+    this.$refs.head.$el.style.backgroundColor = 'var(--hui)'
   }
 }
 </script>
 
 <style lang="less" scoped>
 .reMen-container {
-  height: 460px;
-  width: 1240px;
+  // height: 460px;
+  background-color: var(--hui);
   .swith {
     display: flex;
     justify-content: center;
@@ -97,7 +103,7 @@ export default {
     ul {
       display: flex;
       transition: all 1s;
-      background-color: aquamarine;
+      // background-color: aquamarine;
 
       // transform: translateX();
       li {
