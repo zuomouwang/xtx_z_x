@@ -6,6 +6,7 @@
     <PaneL></PaneL>
     <HoT></HoT>
     <ReMen></ReMen>
+    <PicturE></PicturE>
     <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
     <LatestTopic></LatestTopic>
     <footer-com></footer-com>
@@ -19,6 +20,7 @@ import HeadeCom from '../components/zxw/HeaderCom.vue'
 import PaneL from '../components/xxc/panel/PaneL.vue'
 import HoT from '../components/xxc/Hot/HoT.vue'
 import ReMen from '../components/xxc/Remen/ReMen.vue'
+import PicturE from '../components/xxc/Picture/PicturE.vue'
 import bus from '../eventBus'
 import FooterCom from '../components/zxw/FooterCom.vue'
 import LatestTopic from '../components/zxw/LatestTopic.vue'
@@ -46,7 +48,8 @@ export default {
     ProductCom,
     PaneL,
     HoT,
-    ReMen
+    ReMen,
+    PicturE
   },
   async created() {
     this.$http.get('/home/category/head', {}).then(value => {
@@ -63,12 +66,12 @@ export default {
       bus.emit('getHot', value)
     })
     this.$http.get('/home/brand').then(value => {
-      // console.log(value)
       bus.emit('getReMen', value)
+      // console.log(value.data.result)
     })
     const { data: res } = await this.$http.get('/home/goods')
     this.productdata = res.result
-    console.log(res)
+    // console.log(res)
   }
 }
 </script>
