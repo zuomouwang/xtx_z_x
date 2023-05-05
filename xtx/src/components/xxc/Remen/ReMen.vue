@@ -52,7 +52,7 @@ export default {
     //接收外部传递过来的总数据 存到data
     bus.on('getReMen', value => {
       this.data = value.data.result
-      console.log(this.data[0].picture)
+      // console.log(this.data[0].picture)
       if (value.status === 200) {
         this.status = true
       }

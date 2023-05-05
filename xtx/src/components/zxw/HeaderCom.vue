@@ -2,11 +2,13 @@
   <div class="head">
     <div class="wrapper">
       <div class="pic">
-        <a href="javaScript:;"></a>
+        <a href="#/"></a>
       </div>
       <div class="list">
-        <li v-for="(i, index) in data" :key="i.id" :index="index" @mouseenter="enter" @mouseleave="leave" v-load="flag">
-          <a href="javaScript:;" @click="click_bdb" :class="[status_isbd[index] ? 'checked' : '']">{{ i.name }}</a>
+        <li ref="li" v-for="(i, index) in data" :key="i.id" :index="index" v-load="flag">
+          <a ref="a" href="javaScript:;" :class="[status_isbd[index] ? 'checked' : '', flag ? 'OK' : '']"
+            >{{ i.name }}
+          </a>
           <el-collapse-transition>
             <div class="options" v-show="status[index]">
               <ul class="center">
@@ -82,8 +84,25 @@ export default {
         return [false, false, false, false, false, false, false, false, false]
       },
       set(value) {
-        console.log(value)
         return value
+      }
+    }
+  },
+  watch: {
+    flag: {
+      handler() {
+        this.$nextTick(() => {
+          // console.log(this.$refs)
+          this.$refs.a.forEach(i => {
+            i.addEventListener('click', this.click_bdb)
+          })
+          // @mouseenter="enter"
+          // @mouseleave="leave"
+          this.$refs.li.forEach(i => {
+            i.addEventListener('mouseenter', this.enter)
+            i.addEventListener('mouseleave', this.leave)
+          })
+        })
       }
     }
   },
@@ -151,7 +170,7 @@ export default {
           padding-bottom: 6px;
           text-align: center;
         }
-        a:hover {
+        a.OK:hover {
           border-bottom: 1px solid #27ba9b;
         }
         .checked {

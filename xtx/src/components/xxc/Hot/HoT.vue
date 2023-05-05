@@ -31,7 +31,10 @@ export default {
     return {
       categoryBanners: [],
       data: [],
-      status: false
+      status: false,
+      obj: {
+        arr: []
+      }
     }
   },
   created() {
@@ -40,6 +43,10 @@ export default {
       this.categoryBanners = value.data.result.categoryBanners
       // console.log(this.categoryBanners)
       if (value.status === 200) {
+        value.data.result.categoryBanners.forEach(i => {
+          this.obj.arr.push(i.name)
+        })
+        // console.log(value.data.result)
         this.status = true
       }
     })

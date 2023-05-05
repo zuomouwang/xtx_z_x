@@ -40,7 +40,6 @@ app.directive('load', {
 })
 // 自定义全局指令
 app.directive('pd', {
-
   mounted(el, binding) {
     if (binding.value === true) {
       // console.log(binding.value)
