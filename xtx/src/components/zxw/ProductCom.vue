@@ -28,7 +28,7 @@
           <ul>
             <li v-for="i in data.goods" :key="i.id">
               <div class="goods">
-                <router-link :to="'/Goods/' + i.id"> <img :src="i.picture" alt="" /> </router-link>
+                <a :href="'#/Goods/' + i.id"> <img :src="i.picture" alt="" /> </a>
                 <p class="num1">{{ i.name }}</p>
                 <p class="num2">{{ i.desc }}</p>
                 <p class="price">￥{{ i.price }}</p>

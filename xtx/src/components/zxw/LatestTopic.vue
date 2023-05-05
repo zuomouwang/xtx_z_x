@@ -69,7 +69,6 @@ export default {
     const { data: res } = await this.$http('/home/special')
     if (res.msg === '操作成功') {
       this.res = res.result
-      console.log(res.result)
       this.flag = true
     }
   }

@@ -23,7 +23,7 @@ import bus from '../../../eventBus'
 export default {
   components: {
     HeadBox,
-    BottomBox,
+    BottomBox
     // LiS,
     // MorE
   },
@@ -43,7 +43,6 @@ export default {
       // comst [ id: n] = value.data.result.categoryBanners
       this.categoryBanners = value.data.result.categoryBanners
       this.freshGoods = value.data.result.freshGoods
-      // console.log(value.data.result.categoryBanners[0].name)
       if (value.status === 200) {
         this.status = true
       }
