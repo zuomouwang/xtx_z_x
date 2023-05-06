@@ -2,7 +2,7 @@
   <div>
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
-    <router-view :productdata="productdata" :name="name" :PaneLValue="PaneLValue"></router-view>
+    <router-view :productdata="productdata"></router-view>
     <footer-com></footer-com>
   </div>
 </template>
@@ -35,7 +35,6 @@ export default {
     this.$http.get('/home/category/head', {}).then(value => {
       const { data: res } = value
       this.headdata = res.result
-      this.$bus.emit('emitHeaddata', this.headdata)
       return res.result
     })
     const { data: res } = await this.$http.get('/home/goods')

@@ -1,34 +1,49 @@
 <template>
-  <div class="Good"></div>
+  <div class="Goods">
+    <GoodsRelevantVue :flag="flag" :relevant="relevant"></GoodsRelevantVue>
+  </div>
 </template>
 
 <script>
+import GoodsRelevantVue from '../components/zxw/GoodsRelevant.vue'
 export default {
   data() {
     return {
       res: undefined,
-      flag: false,
-      name: undefined
+      name: undefined,
+      relevant: undefined
     }
+  },
+  computed: {
+    flag() {
+      if (this.res != undefined && this.relevant != undefined) return true
+      return false
+    }
+  },
+  components: {
+    GoodsRelevantVue
   },
   props: {
     id: {
       default: 10086
     }
   },
-  components: {},
   async created() {
     console.log(this.id)
-    this.$bus.on('emitHeaddata', value => {
-      console.log(value)
-    })
     const { data: res } = await this.$http.get('/goods', {
       params: {
         id: this.id
       }
     })
     this.res = res
-    this.flag = true
+    // https://apipc-xiaotuxian-front.itheima.net/goods/relevant?id=4001874&limit=16
+    const { data: relevant } = await this.$http.get('goods/relevant', {
+      params: {
+        id: this.id,
+        limit: 16
+      }
+    })
+    this.relevant = relevant.result
     // const { data: post } = await this.$http.post('/category/goods/temporary', {
     //   page: 3,
     //   pageSize: 20,
@@ -39,4 +54,10 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.Goods {
+  width: 100%;
+  height: 100%;
+  background-color: var(--hui);
+}
+</style>
