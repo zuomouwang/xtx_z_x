@@ -11,7 +11,7 @@
           @pointermove="inPicture"
           @pointerleave="outPicture"
         >
-          <div class="move"></div>
+          <div class="move"> </div>
         </div>
         <ul class="lis">
           <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">
@@ -55,6 +55,7 @@ export default {
     inPicture(e) {
       const Picture = this.$el.querySelector('.picture-container')
       const move = this.$el.querySelector('.allBox .smallPicture .move')
+      move.style.display = 'block'
       // console.log('big:' + Picture.offsetLeft, Picture.offsetTop)
       // console.log('small:' + move.offsetLeft, move.offsetTop)
       // console.log(e.clientX, e.clientY)
@@ -62,7 +63,6 @@ export default {
       // console.log(e.clientY - Picture.offsetTop - move.offsetHeight / 2)
       const bigPicture = this.$el.querySelector('.bigPicture')
       bigPicture.style.display = 'block'
-
       move.style.left = `${e.clientX - Picture.offsetLeft - move.offsetWidth / 2}px`
       move.style.top = `${e.clientY - Picture.offsetTop - move.offsetHeight / 2}px`
       if (e.clientX - Picture.offsetLeft - move.offsetWidth / 2 < 0) {
@@ -80,8 +80,9 @@ export default {
       // bigPicture.style.backgroundPosition = `-${move.style.left} -${move.style.top}`
     },
     outPicture() {
-      const bigPicture = this.$el.querySelector('.bigPicture')
-      bigPicture.style.display = 'none'
+      this.$el.querySelector('.allBox .smallPicture .move').style.display = 'none'
+
+      this.$el.querySelector('.bigPicture').style.display = 'none'
     }
   },
   async created() {
@@ -149,6 +150,7 @@ export default {
         top: 0;
         width: 200px;
         height: 200px;
+        display: none;
         background: rgba(0, 0, 0, 0.2);
       }
     }

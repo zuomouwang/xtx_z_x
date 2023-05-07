@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import axios from 'axios'
+import mitt from 'mitt'
 import './base.css'
 import './my-styles.scss'
 import '../public/font/iconfont.css'
@@ -14,6 +15,7 @@ app.use(router)
 
 axios.defaults.baseURL = 'https://apipc-xiaotuxian-front.itheima.net/'
 app.config.globalProperties.$http = axios
+app.config.globalProperties.$bus = mitt()
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }

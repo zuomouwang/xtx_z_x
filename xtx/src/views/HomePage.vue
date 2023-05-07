@@ -2,29 +2,25 @@
   <div>
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
-    <PicturE></PicturE>
+    <HomeCom></HomeCom>
+    <!-- <PicturE></PicturE>
     <LunBoTu></LunBoTu>
     <PaneL></PaneL>
     <HoT></HoT>
     <ReMen></ReMen>
     <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
     <LatestTopic></LatestTopic>
+    <router-view :productdata="productdata"></router-view> -->
     <footer-com></footer-com>
   </div>
 </template>
 
 <script>
-import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import Topcom from '../components/zxw/TopCom.vue'
 import HeadeCom from '../components/zxw/HeaderCom.vue'
-import PaneL from '../components/xxc/panel/PaneL.vue'
-import HoT from '../components/xxc/Hot/HoT.vue'
-import ReMen from '../components/xxc/Remen/ReMen.vue'
-import PicturE from '../components/xxc/Picture/PicturE.vue'
-import bus from '../eventBus'
+import HomeCom from './HomeCom.vue'
 import FooterCom from '../components/zxw/FooterCom.vue'
-import LatestTopic from '../components/zxw/LatestTopic.vue'
-import ProductCom from '../components/zxw/ProductCom.vue'
+
 export default {
   data() {
     return {
@@ -40,34 +36,16 @@ export default {
     }
   },
   components: {
-    LunBoTu,
     Topcom,
     HeadeCom,
-    FooterCom,
-    LatestTopic,
-    ProductCom,
-    PaneL,
-    HoT,
-    ReMen,
-    PicturE
+    HomeCom,
+    FooterCom
   },
   async created() {
     this.$http.get('/home/category/head', {}).then(value => {
       const { data: res } = value
       this.headdata = res.result
       return res.result
-    })
-    this.$http.get('/home/index').then(value => {
-      // console.log(value)
-      bus.emit('getIndex', value)
-    })
-    this.$http.get('/home/hot').then(value => {
-      // console.log(value)
-      bus.emit('getHot', value)
-    })
-    this.$http.get('/home/brand').then(value => {
-      bus.emit('getReMen', value)
-      // console.log(value.data.result)
     })
     const { data: res } = await this.$http.get('/home/goods')
     this.productdata = res.result

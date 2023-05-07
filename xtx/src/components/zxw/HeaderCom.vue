@@ -191,10 +191,10 @@ export default {
             box-shadow: 0px -1px 4px -1px #ccc;
             padding-left: 100px;
             li {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
               a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 width: 100%;
                 height: 100%;
                 .img {
