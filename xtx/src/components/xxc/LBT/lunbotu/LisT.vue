@@ -16,7 +16,7 @@
         <a href="javaScript:;" v-for="(item, index) in children" :key="item.id">{{ children[index].name }}</a>
       </div>
       <ul class="ul-goods">
-        <li class="li-goods" v-for="item in goods" :key="item.id">
+        <li class="li-goods" v-for="item in goods.slice(0,9)" :key="item.id">
           <a href="javaScript:;">
             <img :src="item.picture" alt="" />
             <div class="li-r">

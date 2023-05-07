@@ -2,11 +2,11 @@
   <div>
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
+    <PicturE></PicturE>
     <LunBoTu></LunBoTu>
     <PaneL></PaneL>
     <HoT></HoT>
     <ReMen></ReMen>
-    <PicturE></PicturE>
     <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
     <LatestTopic></LatestTopic>
     <footer-com></footer-com>
