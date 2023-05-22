@@ -1,19 +1,19 @@
 <template>
   <div class="wrapper">
     <div class="picture-container" ref="Picture">
-      <div class="bigPicture" ref="bigPicture"></div>
-      <div class="allBox">
+      <div class="bigPicture" ref="bigPicture" :style="`background-image:url(${this.data.mainPictures[0]})`"></div>
+      <div class="allBox" v-load="status">
         <div
           class="smallPicture"
           ref="smallPicture"
-          v-if="status"
+          v-load="status"
           :style="`background-image:url(${this.data.mainPictures[0]})`"
           @pointermove="inPicture"
           @pointerleave="outPicture"
         >
           <div class="move"></div>
         </div>
-        <ul class="lis">
+        <ul class="lis" v-load="status">
           <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">
             <!-- :style="`background-image:url(${this.data.mainPictures[index]})`" -->
             <img :src="item" alt="" />
@@ -97,8 +97,8 @@ export default {
     //   // console.log(this.data.mainPictures)
     // })
     // console.log(this.data[0])
-    console.log(this.data)
-        console.log(this.status)
+    // console.log(this.data)
+    // console.log(this.status)
   },
   mounted() {},
   updated() {
