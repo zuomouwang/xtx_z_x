@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <PicturE></PicturE>
     <LunBoTu></LunBoTu>
     <PaneL></PaneL>
     <HoT></HoT>
@@ -15,7 +14,6 @@ import LunBoTu from '../components/xxc/LBT/LunBoTu.vue'
 import PaneL from '../components/xxc/panel/PaneL.vue'
 import HoT from '../components/xxc/Hot/HoT.vue'
 import ReMen from '../components/xxc/Remen/ReMen.vue'
-import PicturE from '../components/xxc/Picture/PicturE.vue'
 import LatestTopic from '../components/zxw/LatestTopic.vue'
 import ProductCom from '../components/zxw/ProductCom.vue'
 import bus from '../eventBus'
@@ -29,7 +27,6 @@ export default {
     PaneL,
     HoT,
     ReMen,
-    PicturE,
     LatestTopic,
     ProductCom
   },

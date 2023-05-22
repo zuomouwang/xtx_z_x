@@ -2,15 +2,7 @@
   <div>
     <Topcom :userName="name"></Topcom>
     <HeadeCom :prodata="headdata"></HeadeCom>
-    <HomeCom></HomeCom>
-    <!-- <PicturE></PicturE>
-    <LunBoTu></LunBoTu>
-    <PaneL></PaneL>
-    <HoT></HoT>
-    <ReMen></ReMen>
-    <ProductCom v-for="i in productdata" :key="i.id" :data="i"></ProductCom>
-    <LatestTopic></LatestTopic>
-    <router-view :productdata="productdata"></router-view> -->
+    <router-view :productdata="productdata"></router-view>
     <footer-com></footer-com>
   </div>
 </template>
@@ -18,7 +10,6 @@
 <script>
 import Topcom from '../components/zxw/TopCom.vue'
 import HeadeCom from '../components/zxw/HeaderCom.vue'
-import HomeCom from './HomeCom.vue'
 import FooterCom from '../components/zxw/FooterCom.vue'
 
 export default {
@@ -38,7 +29,6 @@ export default {
   components: {
     Topcom,
     HeadeCom,
-    HomeCom,
     FooterCom
   },
   async created() {

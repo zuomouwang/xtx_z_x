@@ -11,7 +11,7 @@
           @pointermove="inPicture"
           @pointerleave="outPicture"
         >
-          <div class="move"> </div>
+          <div class="move"></div>
         </div>
         <ul class="lis">
           <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">

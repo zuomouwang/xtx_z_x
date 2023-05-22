@@ -1,5 +1,6 @@
 <template>
   <div class="Goods">
+    <PicturE></PicturE>
     <GoodsRelevantVue :flag="flag" :relevant="relevant"></GoodsRelevantVue>
     <GoodsIntroductionVue :details="details" :flag="flag"></GoodsIntroductionVue>
   </div>
@@ -8,6 +9,7 @@
 <script>
 import GoodsRelevantVue from '../components/zxw/GoodsRelevant.vue' //同类商品介绍模块
 import GoodsIntroductionVue from '../components/zxw/GoodsIntr.vue' //商品图文介绍模块
+import PicturE from '../components/xxc/Picture/PicturE.vue'
 export default {
   data() {
     return {
@@ -25,7 +27,8 @@ export default {
   },
   components: {
     GoodsRelevantVue,
-    GoodsIntroductionVue
+    GoodsIntroductionVue,
+    PicturE
   },
   props: {
     id: {
