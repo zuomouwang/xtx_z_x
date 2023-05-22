@@ -67,8 +67,9 @@ export default {
 <style lang="less" scoped>
 .app-footer {
   overflow: hidden;
-  background-color: #f5f5f5;
-  padding-top: 20px;
+  background-color: #f5f5f5;      
+  padding-top: 20px;        // GoodsIntr margin-bottom: 20px;
+  // margin-top: 20px;
   .contact {
     background: #fff;
     .container {

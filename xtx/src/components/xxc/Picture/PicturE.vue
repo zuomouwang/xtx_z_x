@@ -1,19 +1,24 @@
 <template>
   <div class="wrapper">
     <div class="picture-container" ref="Picture">
-      <div class="bigPicture" ref="bigPicture" :style="`background-image:url(${this.data.mainPictures[0]})`"></div>
-      <div class="allBox" v-load="status">
+      <div
+        class="bigPicture"
+        ref="bigPicture"
+        v-if="status"
+        :style="`background-image:url(${this.data.mainPictures[0]})`"
+      ></div>
+      <div class="allBox">
         <div
           class="smallPicture"
           ref="smallPicture"
-          v-load="status"
+          v-if="status"
           :style="`background-image:url(${this.data.mainPictures[0]})`"
           @pointermove="inPicture"
           @pointerleave="outPicture"
         >
           <div class="move"></div>
         </div>
-        <ul class="lis" v-load="status">
+        <ul class="lis" v-if="status">
           <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">
             <!-- :style="`background-image:url(${this.data.mainPictures[index]})`" -->
             <img :src="item" alt="" />
@@ -92,20 +97,21 @@ export default {
     //   this.data.mainPictures = value.data.result.mainPictures
     //   // console.log(this.data[0])
     //   if (value.status === 200) {
-    //     this.status = true
+    // this.flag = this.status
     //   }
     //   // console.log(this.data.mainPictures)
     // })
     // console.log(this.data[0])
     // console.log(this.data)
-    // console.log(this.status)
+    // console.log(this.flag)
   },
-  mounted() {},
-  updated() {
+  mounted() {
     const lis = this.$el.querySelectorAll('.lis li')
-    if (lis.length > 0) {
-      lis[0].classList.add('act')
-    }
+      if (lis.length > 0) {
+        lis[0].classList.add('act')
+      }
+  },
+  updated() {
     // this.$refs.smallPicture.style.background = `url(${this.data.mainPictures[0]})`
     // this.$refs.lis.style.background = `url(${this.data.mainPictures[0]})`
   }

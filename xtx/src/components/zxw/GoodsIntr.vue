@@ -92,6 +92,7 @@ export default {
   display: none;
   .details {
     width: 940px;
+    // margin-bottom: 20px;               //footer padding-top 20px
     // min-height: 30px;
     background-color: #fff;
     .head {
