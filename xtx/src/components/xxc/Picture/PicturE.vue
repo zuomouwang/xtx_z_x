@@ -143,7 +143,7 @@ export default {
     .smallPicture {
       width: 400px;
       height: 400px;
-      background-color: pink;
+      // background-color: pink;
       background-size: 400px 400px;
       cursor: move;
       .move {
@@ -161,7 +161,7 @@ export default {
       li {
         width: 68px;
         height: 68px;
-        background-color: pink;
+        // background-color: pink;
         background-size: 68px 68px;
         margin-left: 12px;
         margin-bottom: 15px;
