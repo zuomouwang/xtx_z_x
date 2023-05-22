@@ -113,6 +113,7 @@ export default {
   height: 460px;
   background-color: #fff;
   display: none;
+  margin-bottom: 30px;
   .header {
     width: 100%;
     height: 80px;

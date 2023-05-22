@@ -1,17 +1,20 @@
 <template>
   <div class="Goods">
     <GoodsRelevantVue :flag="flag" :relevant="relevant"></GoodsRelevantVue>
+    <GoodsIntroductionVue :details="details" :flag="flag"></GoodsIntroductionVue>
   </div>
 </template>
 
 <script>
-import GoodsRelevantVue from '../components/zxw/GoodsRelevant.vue'
+import GoodsRelevantVue from '../components/zxw/GoodsRelevant.vue' //同类商品介绍模块
+import GoodsIntroductionVue from '../components/zxw/GoodsIntr.vue' //商品图文介绍模块
 export default {
   data() {
     return {
       res: undefined,
       name: undefined,
-      relevant: undefined
+      relevant: undefined,
+      details: undefined
     }
   },
   computed: {
@@ -21,7 +24,8 @@ export default {
     }
   },
   components: {
-    GoodsRelevantVue
+    GoodsRelevantVue,
+    GoodsIntroductionVue
   },
   props: {
     id: {
@@ -36,6 +40,9 @@ export default {
       }
     })
     this.res = res
+    console.log(res)
+    this.details = res.result.details
+    this.details.hotByDay = res.result.hotByDay
     // https://apipc-xiaotuxian-front.itheima.net/goods/relevant?id=4001874&limit=16
     const { data: relevant } = await this.$http.get('goods/relevant', {
       params: {
