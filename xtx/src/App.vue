@@ -22,5 +22,7 @@ export default {
 .wrapper {
   margin: 0 auto;
   width: 1240px;
+  font: 1em/1.4 Microsoft Yahei, PingFang SC, Avenir, Segoe UI, Hiragino Sans GB, STHeiti, 'Microsoft Sans Serif',
+    WenQuanYi Micro Hei, sans-serif;
 }
 </style>
