@@ -1,6 +1,6 @@
 <template>
   <div class="Goods">
-    <PicturE></PicturE>
+    <PicturE :data="result" :status="flag"></PicturE>
     <GoodsRelevantVue :flag="flag" :relevant="relevant"></GoodsRelevantVue>
     <GoodsIntroductionVue :details="details" :flag="flag"></GoodsIntroductionVue>
   </div>
@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       res: undefined,
+      result: undefined,
       name: undefined,
       relevant: undefined,
       details: undefined
@@ -43,7 +44,9 @@ export default {
       }
     })
     this.res = res
+    this.result = res.result
     console.log(res)
+    console.log(this.result)
     this.details = res.result.details
     this.details.hotByDay = res.result.hotByDay
     // https://apipc-xiaotuxian-front.itheima.net/goods/relevant?id=4001874&limit=16

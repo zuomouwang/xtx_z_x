@@ -26,12 +26,13 @@
 
 <script>
 export default {
+  props: ['data', 'status'],
   data() {
     return {
-      data: {
-        mainPictures: []
-      },
-      status: false
+      // data: {
+      //   mainPictures: []
+      // },
+      // status: false
     }
   },
   methods: {
@@ -86,17 +87,18 @@ export default {
     }
   },
   async created() {
-    await this.$http.get('/goods?id=4003488').then(value => {
-      // console.log(value)
-      this.data.mainPictures = value.data.result.mainPictures
-      // console.log(this.data[0])
-      if (value.status === 200) {
-        this.status = true
-      }
-      // console.log(this.data.mainPictures)
-    })
-
+    // await this.$http.get('/goods?id=4003488').then(value => {
+    //   // console.log(value)
+    //   this.data.mainPictures = value.data.result.mainPictures
+    //   // console.log(this.data[0])
+    //   if (value.status === 200) {
+    //     this.status = true
+    //   }
+    //   // console.log(this.data.mainPictures)
+    // })
     // console.log(this.data[0])
+    console.log(this.data)
+        console.log(this.status)
   },
   mounted() {},
   updated() {
