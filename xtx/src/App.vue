@@ -1,15 +1,20 @@
 <template>
-  <HomePage></HomePage>
+  <router-view></router-view>
 </template>
 
 <script>
-import HomePage from './views/HomePage.vue'
 export default {
   data() {
     return {}
   },
-  components: {
-    HomePage
+  components: {},
+  mounted() {
+    if (!localStorage.getItem('user')) {
+      localStorage.setItem('user', JSON.stringify([]))
+    }
+    if (!localStorage.getItem('account')) {
+      localStorage.setItem('account', JSON.stringify([]))
+    }
   }
 }
 </script>

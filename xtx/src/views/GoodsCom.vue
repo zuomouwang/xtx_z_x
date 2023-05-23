@@ -66,6 +66,9 @@ export default {
     //   categoryId: '109296002'
     // })
     // this.list = post
+  },
+  mounted() {
+    document.documentElement.scrollTop = 0
   }
 }
 </script>
@@ -78,7 +81,7 @@ export default {
   overflow: hidden;
   .lod {
     margin: 0 auto;
-     margin-top: 20px;
+    margin-top: 20px;
     width: 1240px;
     background-color: #fff;
     min-height: 400px;

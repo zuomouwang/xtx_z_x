@@ -40,6 +40,11 @@ export default {
     const { data: res } = await this.$http.get('/home/goods')
     this.productdata = res.result
     // console.log(res)
+  },
+  mounted() {
+    if (localStorage.getItem('token')) {
+      this.name = localStorage.getItem('token')
+    }
   }
 }
 </script>

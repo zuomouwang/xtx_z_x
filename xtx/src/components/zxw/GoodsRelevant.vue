@@ -61,11 +61,7 @@ export default {
       this.num = e.target.getAttribute('index')
     },
     aclick() {
-      // console.log(location.hash)
-      // this.$router.push(location.hash)
-      setTimeout(() => {
-        location.reload(true)
-      })
+      this.$router.push(location.hash.replace('#/', ''))
     }
   },
   computed: {
