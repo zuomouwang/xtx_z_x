@@ -82,9 +82,6 @@ function User(name, password) {
   this.name = name
   this.password = password
 }
-function Goods(count) {
-  this.count = count
-}
 import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   data() {
