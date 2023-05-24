@@ -48,7 +48,7 @@ export default {
     })
     this.res = res
     this.result = res.result
-    // console.log(res)
+    console.log(res)
     // console.log(this.result)
     this.details = res.result.details
     this.details.hotByDay = res.result.hotByDay
@@ -84,7 +84,7 @@ export default {
     margin-top: 20px;
     width: 1240px;
     background-color: #fff;
-    min-height: 400px;
+    min-height: 600px;
     position: relative;
     .lv {
       position: absolute;

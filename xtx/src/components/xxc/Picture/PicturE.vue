@@ -1,29 +1,87 @@
 <template>
   <div class="wrapper">
     <div class="picture-container" ref="Picture">
-      <div
-        class="bigPicture"
-        ref="bigPicture"
-        v-if="status"
-        :style="`background-image:url(${this.data.mainPictures[0]})`"
-      ></div>
-      <div class="allBox">
-        <div
-          class="smallPicture"
-          ref="smallPicture"
-          v-if="status"
-          :style="`background-image:url(${this.data.mainPictures[0]})`"
-          @pointermove="inPicture"
-          @pointerleave="outPicture"
-        >
-          <div class="move"></div>
+      <div class="head">
+        <div>
+          <a href="">首页</a>
         </div>
-        <ul class="lis" v-if="status">
-          <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">
-            <!-- :style="`background-image:url(${this.data.mainPictures[index]})`" -->
-            <img :src="item" alt="" />
-          </li>
-        </ul>
+        <i>></i>
+        <div>
+          <a href="">
+            {{ this.data.categories[1].name }}
+          </a>
+        </div>
+        <i>></i>
+        <div>
+          <a href="">
+            {{ this.data.categories[0].name }}
+          </a>
+        </div>
+        <i>></i>
+        <span>{{ this.data.name }}</span>
+      </div>
+      <div class="allBox">
+        <div class="right">
+          <div class="right-pic">
+            <div
+              class="smallPicture"
+              ref="smallPicture"
+              v-if="status"
+              :style="`background-image:url(${this.data.mainPictures[0]})`"
+              @pointermove="inPicture"
+              @pointerleave="outPicture"
+            >
+              <div class="move"></div>
+            </div>
+            <ul class="lis" v-if="status">
+              <li v-for="(item, index) in data.mainPictures" :key="item.id" :data-index="index" @pointerenter="inLis">
+                <!-- :style="`background-image:url(${this.data.mainPictures[index]})`" -->
+                <img :src="item" alt="" />
+              </li>
+            </ul>
+            <div
+              class="bigPicture"
+              ref="bigPicture"
+              v-if="status"
+              :style="`background-image:url(${this.data.mainPictures[0]})`"
+            ></div>
+          </div>
+          <ul class="right-bottom">
+            <li v-for="item in 4" :key="item">
+              <p>销量人气</p>
+              <p>200+</p>
+              <p><i>tu</i>销量人气</p>
+            </li>
+          </ul>
+        </div>
+        <div class="left">
+          <p class="l-name">{{ this.data.name }}</p>
+          <p class="l-desc">{{ this.data.desc }}</p>
+          <p class="l-price">
+            <span>{{ this.data.price }}</span
+            ><span>{{ this.data.oldPrice }}</span>
+          </p>
+          <div class="mes">
+            <dl>
+              <dt>促销</dt>
+              <dd>12月好物放送，App领券购买直降120元</dd>
+            </dl>
+            <dl>
+              <dt>配送</dt>
+              <dd></dd>
+            </dl>
+            <dl>
+              <dt>服务</dt>
+              <dd><span>无忧退货</span><span>快速退款</span><span>免费包邮</span></dd>
+            </dl>
+          </div>
+          <div class="kind">
+            <dl>
+              <dt>{{ this.data.specs[0].name }}</dt>
+              <dd><img :src="item.picture" alt="" v-for="(item, index) in data.specs[0].values" :key="index" /></dd>
+            </dl>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +117,7 @@ export default {
       this.$refs.bigPicture.style.backgroundImage = backgroundImage
     },
     inPicture(e) {
-      const Picture = this.$el.querySelector('.picture-container')
+      const Picture = this.$el.querySelector('.right-pic')
       const move = this.$el.querySelector('.allBox .smallPicture .move')
       move.style.display = 'block'
       // console.log('big:' + Picture.offsetLeft, Picture.offsetTop)
@@ -107,9 +165,9 @@ export default {
   },
   mounted() {
     const lis = this.$el.querySelectorAll('.lis li')
-      if (lis.length > 0) {
-        lis[0].classList.add('act')
-      }
+    if (lis.length > 0) {
+      lis[0].classList.add('act')
+    }
   },
   updated() {
     // this.$refs.smallPicture.style.background = `url(${this.data.mainPictures[0]})`
@@ -120,58 +178,184 @@ export default {
 
 <style lang="less" scoped>
 .picture-container {
-  width: 480px;
-  height: 400px;
-  position: relative;
+  width: 1240px;
+  min-height: 600px;
+  padding-bottom: 20px;
   left: 0;
   top: 0;
-  display: flex;
+  font-size: 14px;
+  background: #f5f5f5;
   // background:url(),no-repeat;
-  .bigPicture {
-    position: absolute;
-    top: 0;
-    left: 412px;
-    width: 400px;
-    height: 400px;
-    display: none;
-    background-color: #27ba9b;
-    background-position: 0 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-repeat: no-repeat;
-    background-size: 800px 800px;
-    background-color: #f8f8f8;
+  .head {
+    display: flex;
+    padding: 25px 10px;
+    // text-align: center;
+    line-height: 14px;
+    div {
+      // line-height: 14px;
+      a {
+        color: #666;
+        transition: all 0.4s;
+        &:hover {
+          color: #27ba9b;
+        }
+      }
+    }
+    i {
+      font-size: 14px;
+      margin-left: 5px;
+      margin-right: 5px;
+      line-height: 14px;
+    }
   }
   .allBox {
     display: flex;
+    // overflow: hidden;
+    background: #fff;
     // position: absolute;
     // left: 0;
     // top: 0;
-    .smallPicture {
-      width: 400px;
-      height: 400px;
-      // background-color: pink;
-      background-size: 400px 400px;
-      cursor: move;
-      .move {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 200px;
-        height: 200px;
-        display: none;
-        background: rgba(0, 0, 0, 0.2);
+    .right {
+      width: 580px;
+      height: 600px;
+      padding: 30px 50px;
+      .right-pic {
+        display: flex;
+        position: relative;
+        .smallPicture {
+          width: 400px;
+          height: 400px;
+          // background-color: pink;
+          background: #f5f5f5;
+          background-size: 400px 400px;
+          cursor: move;
+          .move {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 200px;
+            display: none;
+            background: rgba(0, 0, 0, 0.2);
+          }
+        }
+        .bigPicture {
+          position: absolute;
+          top: 0;
+          left: 412px;
+          width: 400px;
+          height: 400px;
+          display: none;
+          background-color: #27ba9b;
+          background-position: 0 0;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          background-repeat: no-repeat;
+          background-size: 800px 800px;
+          background-color: #f8f8f8;
+        }
+        .lis {
+          width: 80px;
+          li {
+            width: 68px;
+            height: 68px;
+            // background-color: pink;
+            background-size: 68px 68px;
+            margin-left: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+          }
+        }
+      }
+      .right-bottom {
+        display: flex;
+        width: 400px;
+        align-items: center;
+        text-align: center;
+        height: 140px;
+        background-color: aqua;
+        li {
+          flex: 1;
+        }
       }
     }
-    .lis {
-      width: 80px;
-      li {
-        width: 68px;
-        height: 68px;
-        // background-color: pink;
-        background-size: 68px 68px;
-        margin-left: 12px;
-        margin-bottom: 15px;
-        cursor: pointer;
+    .left {
+      flex: 1;
+      padding: 30px 30px 30px 0;
+      .l-name {
+        font-size: 22px;
+      }
+      .l-desc {
+        color: #999;
+        margin-top: 10px;
+      }
+      .l-price {
+        margin-top: 10px;
+        span {
+          color: #cf4444;
+          margin-right: 10px;
+          font-size: 22px;
+          &:last-child {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 16px;
+          }
+          &::before {
+            content: '¥';
+            font-size: 14px;
+          }
+        }
+      }
+      .mes {
+        background: #f5f5f5;
+        width: 500px;
+        padding: 20px 10px 0 10px;
+        margin-top: 10px;
+        dl {
+          padding-bottom: 20px;
+          display: flex;
+          align-items: center;
+          dt {
+            width: 50px;
+            color: #999;
+          }
+          dd {
+            color: #666;
+            span {
+              margin-right: 10px;
+              &::before {
+                content: '•';
+                color: rgb(39, 186, 155);
+                margin-right: 2px;
+              }
+            }
+          }
+        }
+      }
+      .kind {
+        padding-left: 10px;
+        padding-top: 20px;
+        dl {
+          display: flex;
+          padding-bottom: 10px;
+          align-items: center;
+          dt {
+            width: 50px;
+            color: #999;
+          }
+          dd {
+            flex: 1;
+            color: #666;
+            line-height: 40px;
+            img {
+              width: 50px;
+              height: 50px;
+              margin-bottom: 5px;
+              border: 1px solid #e4e4e4;
+              margin-right: 10px;
+              cursor: pointer;
+            }
+          }
+        }
       }
     }
   }
