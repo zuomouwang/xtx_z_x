@@ -47,10 +47,33 @@
             ></div>
           </div>
           <ul class="right-bottom">
-            <li v-for="item in 4" :key="item">
+            <li>
               <p>销量人气</p>
               <p>200+</p>
-              <p><i>tu</i>销量人气</p>
+              <p>
+                <a href="javascript:;"><i>**</i>销量人气</a>
+              </p>
+            </li>
+            <li>
+              <p>商品评价</p>
+              <p>400+</p>
+              <p>
+                <a href="javascript:;"><i>**</i>查看评论</a>
+              </p>
+            </li>
+            <li>
+              <p>销量人气</p>
+              <p>600+</p>
+              <p>
+                <a href="javascript:;"><i>**</i>收藏商品</a>
+              </p>
+            </li>
+            <li>
+              <p>品牌信息</p>
+              <p>苏宁电器</p>
+              <p>
+                <a href="javascript:;"><i>**</i>品牌主页</a>
+              </p>
             </li>
           </ul>
         </div>
@@ -68,19 +91,53 @@
             </dl>
             <dl>
               <dt>配送</dt>
-              <dd></dd>
+              <dd>
+                <b>至</b>
+                <div class="city">
+                  <div class="select" @click="city">
+                    <span>{{ this.ad }}</span
+                    ><i class="iconfont icon-icon-down"></i>
+                  </div>
+                  <div class="option" v-if="flag">
+                    <span v-for="item in address" :key="item.code" @click="tag(item, address)">
+                      {{ item.name }}
+                    </span>
+                  </div>
+                </div>
+              </dd>
             </dl>
             <dl>
               <dt>服务</dt>
-              <dd><span>无忧退货</span><span>快速退款</span><span>免费包邮</span></dd>
+              <dd>
+                <span>无忧退货</span><span>快速退款</span><span>免费包邮</span>
+                <a href="javascript:;">了解详情</a>
+              </dd>
             </dl>
           </div>
           <div class="kind">
             <dl>
               <dt>{{ this.data.specs[0].name }}</dt>
-              <dd><img :src="item.picture" alt="" v-for="(item, index) in data.specs[0].values" :key="index" /></dd>
+              <dd>
+                <img
+                  :src="item.picture"
+                  alt=""
+                  v-for="(item, index) in data.specs[0].values"
+                  :index="index"
+                  :key="index"
+                  @click="guiGe"
+                />
+              </dd>
             </dl>
           </div>
+          <div class="numBox">
+            <span>数量</span>
+            <div class="n-box">
+              <a href="javascript:;">-</a>
+              <input type="text" value="0" />
+              <a href="javascript:;">+</a>
+            </div>
+          </div>
+          <button class="btn">加入购物车</button>
         </div>
       </div>
     </div>
@@ -92,6 +149,12 @@ export default {
   props: ['data', 'status'],
   data() {
     return {
+      flag: undefined,
+      address: undefined,
+      adr_item: undefined,
+      ad: '北京市 市辖区 东城区',
+      ad_item: '',
+      index: undefined
       // data: {
       //   mainPictures: []
       // },
@@ -147,17 +210,51 @@ export default {
       this.$el.querySelector('.allBox .smallPicture .move').style.display = 'none'
 
       this.$el.querySelector('.bigPicture').style.display = 'none'
+    },
+    city() {
+      this.flag = true
+    },
+    tag(item, address) {
+      console.log(address)
+      if (item.level === 0) {
+        this.adr_item = address
+        console.log(this.adr_item)
+        // console.log(adr)
+      }
+      console.log(this.ad)
+      if (item.level === 0 || item.level === 1 || item.level === 2) {
+        this.ad_item += item.name + ' '
+        this.address = item.areaList
+        console.log(this.address)
+      }
+      if (item.level === 2) {
+        this.flag = false
+        this.address = this.adr_item
+        this.ad = this.ad_item
+        this.ad_item = ''
+        console.log(this.ad)
+        console.log(this.flag)
+      }
+    },
+    guiGe(e) {
+      const imgs = this.$el.querySelectorAll('.kind img')
+      imgs.forEach(function (currentValue) {
+        currentValue.classList.remove('s_cor')
+        // 执行操作
+      })
+      e.target.classList.add('s_cor')
+
+      const index = e.target.getAttribute('index')
+
+      const price = this.$el.querySelectorAll('.left .l-price span')
+      price[0].textContent = this.data.skus[index].price
+      price[1].textContent = this.data.skus[index].oldPrice
     }
   },
   async created() {
-    // await this.$http.get('/goods?id=4003488').then(value => {
-    //   // console.log(value)
-    //   this.data.mainPictures = value.data.result.mainPictures
-    //   // console.log(this.data[0])
-    //   if (value.status === 200) {
-    // this.flag = this.status
-    //   }
-    //   // console.log(this.data.mainPictures)
+    const { data: adr } = await this.$http.get('https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json')
+    this.address = adr
+    console.log(this.address)
     // })
     // console.log(this.data[0])
     // console.log(this.data)
@@ -172,6 +269,7 @@ export default {
   updated() {
     // this.$refs.smallPicture.style.background = `url(${this.data.mainPictures[0]})`
     // this.$refs.lis.style.background = `url(${this.data.mainPictures[0]})`
+    // console.log(this.flag === 'shen' || this.flag === 'shi' || this.flag === 'qu')
   }
 }
 </script>
@@ -272,9 +370,31 @@ export default {
         align-items: center;
         text-align: center;
         height: 140px;
-        background-color: aqua;
+        // background-color: aqua;
         li {
           flex: 1;
+          position: relative;
+          p {
+            &:first-child {
+              color: #999;
+            }
+            &:nth-child(2) {
+              color: #cf4444;
+              margin-top: 10px;
+            }
+            &:last-child {
+              color: #666;
+              margin-top: 10px;
+            }
+          }
+          &:not(:first-child)::after {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            height: 60px;
+            border-left: 1px solid #e4e4e4;
+            content: '';
+          }
         }
       }
     }
@@ -319,13 +439,67 @@ export default {
             color: #999;
           }
           dd {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #666;
-            span {
+            > a {
+              color: #27ba9b;
+            }
+            b {
+              vertical-align: middle;
+              padding-right: 5px;
+              font-weight: normal;
+            }
+            > span {
               margin-right: 10px;
               &::before {
                 content: '•';
                 color: rgb(39, 186, 155);
                 margin-right: 2px;
+              }
+            }
+            .city {
+              vertical-align: middle;
+              position: relative;
+              .select {
+                border: 1px solid #e4e4e4;
+                height: 30px;
+                padding: 0 5px;
+                line-height: 28px;
+                cursor: pointer;
+                overflow: hidden;
+                span {
+                  color: #666;
+                  font-size: 12px;
+                }
+                i {
+                  font-size: 12px;
+                  margin-left: 5px;
+                }
+              }
+              .option {
+                width: 542px;
+                border: 1px solid #e4e4e4;
+                position: absolute;
+                left: 0;
+                top: 29px;
+                background: #fff;
+                min-height: 30px;
+                line-height: 30px;
+                display: flex;
+                flex-wrap: wrap;
+                padding: 10px;
+                span {
+                  width: 130px;
+                  text-align: center;
+                  cursor: pointer;
+                  border-radius: 4px;
+                  padding: 0 3px;
+                  &:hover {
+                    background: #f5f5f5;
+                  }
+                }
               }
             }
           }
@@ -357,10 +531,61 @@ export default {
           }
         }
       }
+      .numBox {
+        display: flex;
+        align-items: center;
+        span {
+          width: 60px;
+          color: #999;
+          padding-left: 10px;
+        }
+        .n-box {
+          width: 120px;
+          height: 30px;
+          border: 1px solid #e4e4e4;
+          display: flex;
+          a {
+            width: 29px;
+            line-height: 28px;
+            text-align: center;
+            background: #f8f8f8;
+            font-size: 16px;
+            color: #666;
+          }
+          input {
+            width: 60px;
+            padding: 0 5px;
+            text-align: center;
+            color: #666;
+            font-family: inherit;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0;
+          }
+        }
+      }
+      .btn {
+        margin-top: 20px;
+        display: block;
+        width: 180px;
+        height: 50px;
+        font-size: 16px;
+        background: #27ba9b;
+        color: #fff;
+        border: none;
+        outline: none;
+        text-align: center;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+      }
     }
   }
 }
 .act {
   border: 2px solid #27ba9b;
+}
+.s_cor {
+  border-color: #27ba9b !important;
 }
 </style>
