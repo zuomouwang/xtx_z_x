@@ -30,7 +30,7 @@
         <input type="text" placeholder="搜一搜" />
       </div>
       <div class="cart">
-        <a href="javaScript:;">
+        <a href="#/cart">
           <el-icon class="big"><ShoppingCart /></el-icon>
           <em>0</em>
         </a>
