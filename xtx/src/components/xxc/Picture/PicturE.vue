@@ -124,7 +124,7 @@
                   v-for="(item, index) in data.specs[0].values"
                   :color="index"
                   :key="index"
-                  @click="guiGe"
+                  @click="guiGe($event, item)"
                 />
               </dd>
             </dl>
@@ -136,7 +136,7 @@
                   v-for="(item, index) in data.specs[1].values"
                   :size="index"
                   :key="index"
-                  @click="chiCun($event, data.specs[1].values)"
+                  @click="chiCun($event, item)"
                   >{{ item.name }}
                 </span>
               </dd>
@@ -170,15 +170,18 @@ export default {
       ad_item: '',
       price: undefined,
       ad: '北京市 市辖区 东城区',
-      kind_pic: undefined,
+      kind: undefined,
       chiMa: undefined,
       num: 1,
+      acc: undefined,
       mes: {
+        index: -1,
         id: undefined,
         name: undefined,
+        picture: undefined,
         price: undefined,
         address: undefined,
-        kind_pic: undefined,
+        kind: undefined,
         size: undefined,
         num: undefined
       }
@@ -217,16 +220,16 @@ export default {
       // console.log(e.clientY - Picture.offsetTop - move.offsetHeight / 2)
       const bigPicture = this.$el.querySelector('.bigPicture')
       bigPicture.style.display = 'block'
-      move.style.left = `${e.clientX - Picture.offsetLeft - move.offsetWidth / 2}px`
-      move.style.top = `${e.clientY - Picture.offsetTop - move.offsetHeight / 2}px`
-      if (e.clientX - Picture.offsetLeft - move.offsetWidth / 2 < 0) {
+      move.style.left = `${e.pageX - Picture.offsetLeft - move.offsetWidth / 2}px`
+      move.style.top = `${e.pageY - Picture.offsetTop - move.offsetHeight / 2}px`
+      if (e.pageX - Picture.offsetLeft - move.offsetWidth / 2 < 0) {
         move.style.left = `0px`
-      } else if (e.clientX - Picture.offsetLeft - move.offsetWidth / 2 > 200) {
+      } else if (e.pageX - Picture.offsetLeft - move.offsetWidth / 2 > 200) {
         move.style.left = `200px`
       }
-      if (e.clientY - Picture.offsetTop - move.offsetHeight / 2 < 0) {
+      if (e.pageY - Picture.offsetTop - move.offsetHeight / 2 < 0) {
         move.style.top = `0px`
-      } else if (e.clientY - Picture.offsetTop - move.offsetHeight / 2 > 200) {
+      } else if (e.pageY - Picture.offsetTop - move.offsetHeight / 2 > 200) {
         move.style.top = `200px`
       }
       // console.log(-2 * parseInt(move.style.left))
@@ -263,46 +266,43 @@ export default {
         console.log(this.flag)
       }
     },
-    guiGe(e) {
+    guiGe(e, item) {
       const imgs = this.$el.querySelectorAll('.kind img')
-      const price = this.$el.querySelectorAll('.left .l-price span')
+      const prices = this.$el.querySelectorAll('.left .l-price span')
+      // console.log(item)
       imgs.forEach(function (currentValue) {
         currentValue.classList.remove('s_cor')
         // 执行操作
       })
       e.target.classList.add('s_cor')
-      const color = e.target.getAttribute('color')
-      // console.log(e.target.src);
-      this.kind_pic = e.target.src
-      // console.log(color)
-      price[0].textContent = this.data.skus[color].price
-      price[1].textContent = this.data.skus[color].oldPrice
-      this.price = price[0].textContent
-      console.log(this.price)
+      console.log(item)
+      this.data.skus.forEach(function (currentValue) {
+        // console.log(currentValue.specs[0].valueName)
+        if (currentValue.specs[0].valueName === item.name) {
+          // console.log(currentValue)
+          prices[0].textContent = currentValue.price
+          prices[1].textContent = currentValue.oldPrice
+        }
+      })
+      this.price = prices[0].textContent
+      // const color = e.target.getAttribute('color')
+      // // console.log(e.target.src);
+      this.kind = `${this.data.specs[0].name}:${item.name}`
+      // // console.log(color)
+      // price[0].textContent = this.data.skus[color].price
+      // price[1].textContent = this.data.skus[color].oldPrice
+      // this.price = price[0].textContent
+      // console.log(this.price)
     },
-    chiCun(e, values) {
+    chiCun(e, item) {
       const spans = this.$el.querySelectorAll('.kind span')
-      const price = this.$el.querySelectorAll('.left .l-price span')
       spans.forEach(function (currentValue) {
         currentValue.classList.remove('s_cor')
         // 执行操作
       })
       e.target.classList.add('s_cor')
-
-      // this.console.log(e.target.value)
-      if (values !== undefined) {
-        const size = e.target.getAttribute('size')
-        this.chiMa = values[size].name
-        // const color = e.target.getAttribute('color')
-        console.log(values[size].name)
-        this.data.skus.forEach(function (currentValue) {
-          if (currentValue.specs[1].name === values[size].name) {
-            price[0].textContent = currentValue.price
-            price[1].textContent = currentValue.oldPrice
-          }
-          // 执行操作
-        })
-      }
+      console.log(item)
+      this.chiMa = `${this.data.specs[1].name}:${item.name}`
     },
     jian() {
       const input = this.$el.querySelector('.numBox input')
@@ -319,12 +319,13 @@ export default {
       // console.log(input.value)
     },
     car() {
-      console.log(localStorage.getItem('token').length)
-      if (localStorage.getItem('token').length <= 0) {
+      // console.log(localStorage.getItem('token').length)
+      const token = localStorage.getItem('token')
+      if (token.length <= 0) {
         alert('未登录')
         return
       }
-      if (this.kind_pic === undefined) {
+      if (this.kind === undefined) {
         alert('规格')
         return
       }
@@ -333,14 +334,42 @@ export default {
         return
       }
       this.mes.id = this.data.id
+      let id = this.mes.id
       this.mes.name = this.data.name
+      this.mes.picture = this.data.mainPictures[0]
       this.mes.price = this.price
+      // let price = this.price
       this.mes.address = this.ad
-      this.mes.kind_pic = this.kind_pic
+      let address = this.ad
+      this.mes.kind = this.kind
+      let kind = this.kind
       this.mes.size = this.chiMa
+      let size = this.chiMa
       this.mes.num = this.num
+      let num = this.num
       console.log(this.mes)
-      localStorage.setItem('cart', JSON.stringify(this.mes))
+      let acc = JSON.parse(localStorage.getItem('account'))
+      // acc[acc.findIndex(item => item.name === token)].cart = []
+      // acc[acc.findIndex(item => item.name === token)].cart.splice(0,1)
+      let same = false
+      let my = acc.find(item => item.name === token)
+      my.cart.forEach(function (currentValue) {
+        // if (currentValue.id === this.mes.id) {
+        if (currentValue.id === id && currentValue.kind === kind && currentValue.size === size) {
+          currentValue.address = address
+          currentValue.num += num
+          localStorage.setItem('account', JSON.stringify(acc))
+          same = true
+        }
+        // }
+      })
+      if (same) {
+        return
+      }
+      this.mes.index = my.cart.length
+      my.cart.push(this.mes)
+      console.log(acc)
+      localStorage.setItem('account', JSON.stringify(acc))
     }
   },
   async created() {
@@ -432,6 +461,7 @@ export default {
         }
         .bigPicture {
           position: absolute;
+          z-index: 999;
           top: 0;
           left: 412px;
           width: 400px;
@@ -478,6 +508,11 @@ export default {
             &:last-child {
               color: #666;
               margin-top: 10px;
+            }
+            a {
+              &:hover {
+                color: #27ba9b;
+              }
             }
             i {
               color: #27ba9b;

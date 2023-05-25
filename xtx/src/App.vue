@@ -30,4 +30,7 @@ export default {
   font: 1em/1.4 Microsoft Yahei, PingFang SC, Avenir, Segoe UI, Hiragino Sans GB, STHeiti, 'Microsoft Sans Serif',
     WenQuanYi Micro Hei, sans-serif;
 }
+body {
+  user-select: none;
+}
 </style>
