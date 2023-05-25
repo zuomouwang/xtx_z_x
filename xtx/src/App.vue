@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <div class="all">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -24,10 +26,16 @@ export default {
   --lv: #27ba9b;
   --hui: #f5f5f5;
 }
+body {
+  user-select: none;
+}
 .wrapper {
   margin: 0 auto;
   width: 1240px;
   font: 1em/1.4 Microsoft Yahei, PingFang SC, Avenir, Segoe UI, Hiragino Sans GB, STHeiti, 'Microsoft Sans Serif',
     WenQuanYi Micro Hei, sans-serif;
 }
+// .all {
+//   background-color: #f5f5f5;
+// }
 </style>
