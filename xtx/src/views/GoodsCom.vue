@@ -48,7 +48,7 @@ export default {
     })
     this.res = res
     this.result = res.result
-    console.log(res)
+    // console.log(res)
     // console.log(this.result)
     this.details = res.result.details
     this.details.hotByDay = res.result.hotByDay

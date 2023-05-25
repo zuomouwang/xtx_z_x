@@ -38,4 +38,7 @@ body {
 // .all {
 //   background-color: #f5f5f5;
 // }
+body {
+  user-select: none;
+}
 </style>

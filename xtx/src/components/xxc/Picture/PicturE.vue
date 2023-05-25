@@ -5,19 +5,19 @@
         <div>
           <a href="">首页</a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <div>
           <a href="">
             {{ this.data.categories[1].name }}
           </a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <div>
           <a href="">
             {{ this.data.categories[0].name }}
           </a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <span>{{ this.data.name }}</span>
       </div>
       <div class="allBox">
@@ -51,28 +51,28 @@
               <p>销量人气</p>
               <p>200+</p>
               <p>
-                <a href="javascript:;"><i>**</i>销量人气</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>销量人气</a>
               </p>
             </li>
             <li>
               <p>商品评价</p>
               <p>400+</p>
               <p>
-                <a href="javascript:;"><i>**</i>查看评论</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>查看评论</a>
               </p>
             </li>
             <li>
               <p>销量人气</p>
               <p>600+</p>
               <p>
-                <a href="javascript:;"><i>**</i>收藏商品</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>收藏商品</a>
               </p>
             </li>
             <li>
               <p>品牌信息</p>
               <p>苏宁电器</p>
               <p>
-                <a href="javascript:;"><i>**</i>品牌主页</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>品牌主页</a>
               </p>
             </li>
           </ul>
@@ -96,7 +96,7 @@
                 <div class="city">
                   <div class="select" @click="city">
                     <span>{{ this.ad }}</span
-                    ><i class="iconfont icon-icon-down"></i>
+                    ><i class="iconfont icon-arrow-down-bold"></i>
                   </div>
                   <div class="option" v-if="flag">
                     <span v-for="item in address" :key="item.code" @click="tag(item, address)">
@@ -122,22 +122,35 @@
                   :src="item.picture"
                   alt=""
                   v-for="(item, index) in data.specs[0].values"
-                  :index="index"
+                  :color="index"
                   :key="index"
-                  @click="guiGe"
+                  @click="guiGe($event, item)"
                 />
+              </dd>
+            </dl>
+            <dl v-if="data.specs[1] !== undefined">
+              <dt>{{ this.data.specs[1].name }}</dt>
+              <dd>
+                <span
+                  alt=""
+                  v-for="(item, index) in data.specs[1].values"
+                  :size="index"
+                  :key="index"
+                  @click="chiCun($event, item)"
+                  >{{ item.name }}
+                </span>
               </dd>
             </dl>
           </div>
           <div class="numBox">
             <span>数量</span>
             <div class="n-box">
-              <a href="javascript:;">-</a>
-              <input type="text" value="0" />
-              <a href="javascript:;">+</a>
+              <a href="javascript:;" class="jian" @click="jian">-</a>
+              <input type="text" :value="num" />
+              <a href="javascript:;" class="jia" @click="jia">+</a>
             </div>
           </div>
-          <button class="btn">加入购物车</button>
+          <button class="btn" @click="car">加入购物车</button>
         </div>
       </div>
     </div>
@@ -150,11 +163,28 @@ export default {
   data() {
     return {
       flag: undefined,
+      color: undefined,
+      size: undefined,
       address: undefined,
       adr_item: undefined,
-      ad: '北京市 市辖区 东城区',
       ad_item: '',
-      index: undefined
+      price: undefined,
+      ad: '北京市 市辖区 东城区',
+      kind: undefined,
+      chiMa: undefined,
+      num: 1,
+      acc: undefined,
+      mes: {
+        index: -1,
+        id: undefined,
+        name: undefined,
+        picture: undefined,
+        price: undefined,
+        address: undefined,
+        kind: undefined,
+        size: undefined,
+        num: undefined
+      }
       // data: {
       //   mainPictures: []
       // },
@@ -190,16 +220,16 @@ export default {
       // console.log(e.clientY - Picture.offsetTop - move.offsetHeight / 2)
       const bigPicture = this.$el.querySelector('.bigPicture')
       bigPicture.style.display = 'block'
-      move.style.left = `${e.clientX - Picture.offsetLeft - move.offsetWidth / 2}px`
-      move.style.top = `${e.clientY - Picture.offsetTop - move.offsetHeight / 2}px`
-      if (e.clientX - Picture.offsetLeft - move.offsetWidth / 2 < 0) {
+      move.style.left = `${e.pageX - Picture.offsetLeft - move.offsetWidth / 2}px`
+      move.style.top = `${e.pageY - Picture.offsetTop - move.offsetHeight / 2}px`
+      if (e.pageX - Picture.offsetLeft - move.offsetWidth / 2 < 0) {
         move.style.left = `0px`
-      } else if (e.clientX - Picture.offsetLeft - move.offsetWidth / 2 > 200) {
+      } else if (e.pageX - Picture.offsetLeft - move.offsetWidth / 2 > 200) {
         move.style.left = `200px`
       }
-      if (e.clientY - Picture.offsetTop - move.offsetHeight / 2 < 0) {
+      if (e.pageY - Picture.offsetTop - move.offsetHeight / 2 < 0) {
         move.style.top = `0px`
-      } else if (e.clientY - Picture.offsetTop - move.offsetHeight / 2 > 200) {
+      } else if (e.pageY - Picture.offsetTop - move.offsetHeight / 2 > 200) {
         move.style.top = `200px`
       }
       // console.log(-2 * parseInt(move.style.left))
@@ -215,46 +245,137 @@ export default {
       this.flag = true
     },
     tag(item, address) {
-      console.log(address)
+      // console.log(address)
       if (item.level === 0) {
         this.adr_item = address
-        console.log(this.adr_item)
+        // console.log(this.adr_item)
         // console.log(adr)
       }
-      console.log(this.ad)
+      // console.log(this.ad)
       if (item.level === 0 || item.level === 1 || item.level === 2) {
         this.ad_item += item.name + ' '
         this.address = item.areaList
-        console.log(this.address)
+        // console.log(this.address)
       }
       if (item.level === 2) {
         this.flag = false
         this.address = this.adr_item
         this.ad = this.ad_item
         this.ad_item = ''
-        console.log(this.ad)
-        console.log(this.flag)
+        // console.log(this.ad)
+        // console.log(this.flag)
       }
     },
-    guiGe(e) {
+    guiGe(e, item) {
       const imgs = this.$el.querySelectorAll('.kind img')
+      const prices = this.$el.querySelectorAll('.left .l-price span')
+      // console.log(item)
       imgs.forEach(function (currentValue) {
         currentValue.classList.remove('s_cor')
         // 执行操作
       })
       e.target.classList.add('s_cor')
-
-      const index = e.target.getAttribute('index')
-
-      const price = this.$el.querySelectorAll('.left .l-price span')
-      price[0].textContent = this.data.skus[index].price
-      price[1].textContent = this.data.skus[index].oldPrice
+      // console.log(item)
+      this.data.skus.forEach(function (currentValue) {
+        // console.log(currentValue.specs[0].valueName)
+        if (currentValue.specs[0].valueName === item.name) {
+          // console.log(currentValue)
+          prices[0].textContent = currentValue.price
+          prices[1].textContent = currentValue.oldPrice
+        }
+      })
+      this.price = prices[0].textContent
+      // const color = e.target.getAttribute('color')
+      // // console.log(e.target.src);
+      this.kind = `${this.data.specs[0].name}:${item.name}`
+      // // console.log(color)
+      // price[0].textContent = this.data.skus[color].price
+      // price[1].textContent = this.data.skus[color].oldPrice
+      // this.price = price[0].textContent
+      // console.log(this.price)
+    },
+    chiCun(e, item) {
+      const spans = this.$el.querySelectorAll('.kind span')
+      spans.forEach(function (currentValue) {
+        currentValue.classList.remove('s_cor')
+        // 执行操作
+      })
+      e.target.classList.add('s_cor')
+      console.log(item)
+      this.chiMa = `${this.data.specs[1].name}:${item.name}`
+    },
+    jian() {
+      const input = this.$el.querySelector('.numBox input')
+      // const jianA = this.$el.querySelector('.jian')
+      if (this.num <= 1) {
+        return
+      }
+      this.num = --input.value
+      // console.log(input.value)
+    },
+    jia() {
+      const input = this.$el.querySelector('.numBox input')
+      this.num = ++input.value
+      // console.log(input.value)
+    },
+    car() {
+      // console.log(localStorage.getItem('token').length)
+      const token = localStorage.getItem('token')
+      if (token.length <= 0) {
+        alert('未登录')
+        return
+      }
+      if (this.kind === undefined) {
+        alert('规格')
+        return
+      }
+      if (this.data.specs[1] !== undefined && this.chiMa === undefined) {
+        alert('尺码')
+        return
+      }
+      this.mes.id = this.data.id
+      let id = this.mes.id
+      this.mes.name = this.data.name
+      this.mes.picture = this.data.mainPictures[0]
+      this.mes.price = this.price
+      // let price = this.price
+      this.mes.address = this.ad
+      let address = this.ad
+      this.mes.kind = this.kind
+      let kind = this.kind
+      this.mes.size = this.chiMa
+      let size = this.chiMa
+      this.mes.num = this.num
+      let num = this.num
+      // console.log(this.mes)
+      let acc = JSON.parse(localStorage.getItem('account'))
+      // acc[acc.findIndex(item => item.name === token)].cart = []
+      // acc[acc.findIndex(item => item.name === token)].cart.splice(0,1)
+      let same = false
+      let my = acc.find(item => item.name === token)
+      my.cart.forEach(function (currentValue) {
+        // if (currentValue.id === this.mes.id) {
+        if (currentValue.id === id && currentValue.kind === kind && currentValue.size === size) {
+          currentValue.address = address
+          currentValue.num += num
+          localStorage.setItem('account', JSON.stringify(acc))
+          same = true
+        }
+        // }
+      })
+      if (same) {
+        return
+      }
+      this.mes.index = my.cart.length
+      my.cart.push(this.mes)
+      // console.log(acc)
+      localStorage.setItem('account', JSON.stringify(acc))
     }
   },
   async created() {
     const { data: adr } = await this.$http.get('https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json')
     this.address = adr
-    console.log(this.address)
+    // console.log(this.address)
     // })
     // console.log(this.data[0])
     // console.log(this.data)
@@ -300,6 +421,7 @@ export default {
       }
     }
     i {
+      color: #666;
       font-size: 14px;
       margin-left: 5px;
       margin-right: 5px;
@@ -339,6 +461,7 @@ export default {
         }
         .bigPicture {
           position: absolute;
+          z-index: 999;
           top: 0;
           left: 412px;
           width: 400px;
@@ -385,6 +508,14 @@ export default {
             &:last-child {
               color: #666;
               margin-top: 10px;
+            }
+            a {
+              &:hover {
+                color: #27ba9b;
+              }
+            }
+            i {
+              color: #27ba9b;
             }
           }
           &:not(:first-child)::after {
@@ -474,6 +605,9 @@ export default {
                   font-size: 12px;
                 }
                 i {
+                  display: inline-block;
+                  height: 15px;
+                  width: 15px;
                   font-size: 12px;
                   margin-left: 5px;
                 }
@@ -524,6 +658,15 @@ export default {
               width: 50px;
               height: 50px;
               margin-bottom: 5px;
+              border: 1px solid #e4e4e4;
+              margin-right: 10px;
+              cursor: pointer;
+            }
+            span {
+              display: inline-block;
+              height: 30px;
+              line-height: 28px;
+              padding: 0 20px;
               border: 1px solid #e4e4e4;
               margin-right: 10px;
               cursor: pointer;
