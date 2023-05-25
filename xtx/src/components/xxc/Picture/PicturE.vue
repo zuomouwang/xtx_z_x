@@ -5,19 +5,19 @@
         <div>
           <a href="">首页</a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <div>
           <a href="">
             {{ this.data.categories[1].name }}
           </a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <div>
           <a href="">
             {{ this.data.categories[0].name }}
           </a>
         </div>
-        <i>></i>
+        <i class="iconfont icon-arrow-right-bold"></i>
         <span>{{ this.data.name }}</span>
       </div>
       <div class="allBox">
@@ -51,28 +51,28 @@
               <p>销量人气</p>
               <p>200+</p>
               <p>
-                <a href="javascript:;"><i>**</i>销量人气</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>销量人气</a>
               </p>
             </li>
             <li>
               <p>商品评价</p>
               <p>400+</p>
               <p>
-                <a href="javascript:;"><i>**</i>查看评论</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>查看评论</a>
               </p>
             </li>
             <li>
               <p>销量人气</p>
               <p>600+</p>
               <p>
-                <a href="javascript:;"><i>**</i>收藏商品</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>收藏商品</a>
               </p>
             </li>
             <li>
               <p>品牌信息</p>
               <p>苏宁电器</p>
               <p>
-                <a href="javascript:;"><i>**</i>品牌主页</a>
+                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>品牌主页</a>
               </p>
             </li>
           </ul>
@@ -96,7 +96,7 @@
                 <div class="city">
                   <div class="select" @click="city">
                     <span>{{ this.ad }}</span
-                    ><i class="iconfont icon-icon-down"></i>
+                    ><i class="iconfont icon-arrow-down-bold"></i>
                   </div>
                   <div class="option" v-if="flag">
                     <span v-for="item in address" :key="item.code" @click="tag(item, address)">
@@ -122,22 +122,35 @@
                   :src="item.picture"
                   alt=""
                   v-for="(item, index) in data.specs[0].values"
-                  :index="index"
+                  :color="index"
                   :key="index"
                   @click="guiGe"
                 />
+              </dd>
+            </dl>
+            <dl v-if="data.specs[1] !== undefined">
+              <dt>{{ this.data.specs[1].name }}</dt>
+              <dd>
+                <span
+                  alt=""
+                  v-for="(item, index) in data.specs[1].values"
+                  :size="index"
+                  :key="index"
+                  @click="chiCun($event, data.specs[1].values)"
+                  >{{ item.name }}
+                </span>
               </dd>
             </dl>
           </div>
           <div class="numBox">
             <span>数量</span>
             <div class="n-box">
-              <a href="javascript:;">-</a>
-              <input type="text" value="0" />
-              <a href="javascript:;">+</a>
+              <a href="javascript:;" class="jian" @click="jian">-</a>
+              <input type="text" :value="num" />
+              <a href="javascript:;" class="jia" @click="jia">+</a>
             </div>
           </div>
-          <button class="btn">加入购物车</button>
+          <button class="btn" @click="car">加入购物车</button>
         </div>
       </div>
     </div>
@@ -150,11 +163,25 @@ export default {
   data() {
     return {
       flag: undefined,
+      color: undefined,
+      size: undefined,
       address: undefined,
       adr_item: undefined,
-      ad: '北京市 市辖区 东城区',
       ad_item: '',
-      index: undefined
+      price: undefined,
+      ad: '北京市 市辖区 东城区',
+      kind_pic: undefined,
+      chiMa: undefined,
+      num: 1,
+      mes: {
+        id: undefined,
+        name: undefined,
+        price: undefined,
+        address: undefined,
+        kind_pic: undefined,
+        size: undefined,
+        num: undefined
+      }
       // data: {
       //   mainPictures: []
       // },
@@ -238,23 +265,88 @@ export default {
     },
     guiGe(e) {
       const imgs = this.$el.querySelectorAll('.kind img')
+      const price = this.$el.querySelectorAll('.left .l-price span')
       imgs.forEach(function (currentValue) {
         currentValue.classList.remove('s_cor')
         // 执行操作
       })
       e.target.classList.add('s_cor')
-
-      const index = e.target.getAttribute('index')
-
+      const color = e.target.getAttribute('color')
+      // console.log(e.target.src);
+      this.kind_pic = e.target.src
+      // console.log(color)
+      price[0].textContent = this.data.skus[color].price
+      price[1].textContent = this.data.skus[color].oldPrice
+      this.price = price[0].textContent
+      console.log(this.price)
+    },
+    chiCun(e, values) {
+      const spans = this.$el.querySelectorAll('.kind span')
       const price = this.$el.querySelectorAll('.left .l-price span')
-      price[0].textContent = this.data.skus[index].price
-      price[1].textContent = this.data.skus[index].oldPrice
+      spans.forEach(function (currentValue) {
+        currentValue.classList.remove('s_cor')
+        // 执行操作
+      })
+      e.target.classList.add('s_cor')
+
+      // this.console.log(e.target.value)
+      if (values !== undefined) {
+        const size = e.target.getAttribute('size')
+        this.chiMa = values[size].name
+        // const color = e.target.getAttribute('color')
+        console.log(values[size].name)
+        this.data.skus.forEach(function (currentValue) {
+          if (currentValue.specs[1].name === values[size].name) {
+            price[0].textContent = currentValue.price
+            price[1].textContent = currentValue.oldPrice
+          }
+          // 执行操作
+        })
+      }
+    },
+    jian() {
+      const input = this.$el.querySelector('.numBox input')
+      // const jianA = this.$el.querySelector('.jian')
+      if (this.num <= 1) {
+        return
+      }
+      this.num = --input.value
+      // console.log(input.value)
+    },
+    jia() {
+      const input = this.$el.querySelector('.numBox input')
+      this.num = ++input.value
+      // console.log(input.value)
+    },
+    car() {
+      console.log(localStorage.getItem('token').length)
+      if (localStorage.getItem('token').length <= 0) {
+        alert('未登录')
+        return
+      }
+      if (this.kind_pic === undefined) {
+        alert('规格')
+        return
+      }
+      if (this.data.specs[1] !== undefined && this.chiMa === undefined) {
+        alert('尺码')
+        return
+      }
+      this.mes.id = this.data.id
+      this.mes.name = this.data.name
+      this.mes.price = this.price
+      this.mes.address = this.ad
+      this.mes.kind_pic = this.kind_pic
+      this.mes.size = this.chiMa
+      this.mes.num = this.num
+      console.log(this.mes)
+      localStorage.setItem('cart', JSON.stringify(this.mes))
     }
   },
   async created() {
     const { data: adr } = await this.$http.get('https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json')
     this.address = adr
-    console.log(this.address)
+    // console.log(this.address)
     // })
     // console.log(this.data[0])
     // console.log(this.data)
@@ -300,6 +392,7 @@ export default {
       }
     }
     i {
+      color: #666;
       font-size: 14px;
       margin-left: 5px;
       margin-right: 5px;
@@ -385,6 +478,9 @@ export default {
             &:last-child {
               color: #666;
               margin-top: 10px;
+            }
+            i {
+              color: #27ba9b;
             }
           }
           &:not(:first-child)::after {
@@ -474,6 +570,9 @@ export default {
                   font-size: 12px;
                 }
                 i {
+                  display: inline-block;
+                  height: 15px;
+                  width: 15px;
                   font-size: 12px;
                   margin-left: 5px;
                 }
@@ -524,6 +623,15 @@ export default {
               width: 50px;
               height: 50px;
               margin-bottom: 5px;
+              border: 1px solid #e4e4e4;
+              margin-right: 10px;
+              cursor: pointer;
+            }
+            span {
+              display: inline-block;
+              height: 30px;
+              line-height: 28px;
+              padding: 0 20px;
               border: 1px solid #e4e4e4;
               margin-right: 10px;
               cursor: pointer;
