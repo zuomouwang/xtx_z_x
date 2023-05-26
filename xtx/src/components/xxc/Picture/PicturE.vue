@@ -168,7 +168,7 @@ export default {
       address: undefined,
       adr_item: undefined,
       ad_item: '',
-      id: undefined,
+      goodsid: undefined,
       price: undefined,
       ad: '北京市 市辖区 东城区',
       kind: undefined,
@@ -179,7 +179,7 @@ export default {
         checked: true,
         window: false,
         id: undefined,
-        bigId: undefined,
+        goodsid: undefined,
         name: undefined,
         picture: undefined,
         price: undefined,
@@ -278,7 +278,7 @@ export default {
         // 执行操作
       })
       e.target.classList.add('s_cor')
-      let id = this.id
+      let goodsid = this.goodsid
       // console.log(item)
       this.data.skus.forEach(function (currentValue) {
         // console.log(currentValue.specs[0].valueName)
@@ -286,10 +286,10 @@ export default {
           // console.log(currentValue)
           prices[0].textContent = currentValue.price
           prices[1].textContent = currentValue.oldPrice
-          id = currentValue.id
+          goodsid = currentValue.id
         }
       })
-      this.id = id
+      this.goodsid = goodsid
       this.price = prices[0].textContent
       // const color = e.target.getAttribute('color')
       // // console.log(e.target.src);
@@ -340,18 +340,23 @@ export default {
         alert('尺码')
         return
       }
-      this.mes.bigId = this.data.id
+      this.mes.id = this.data.id
       // console.log(this.mes.bigId)
-      this.mes.id = this.id
+      this.mes.goodsid = this.goodsid
       // console.log(this.mes.id)
-      let bigId = this.mes.bigId
+      let goodsid = this.mes.goodsid
       this.mes.name = this.data.name
       this.mes.picture = this.data.mainPictures[0]
       this.mes.price = this.price
       // let price = this.price
       this.mes.address = this.ad
       let address = this.ad
-      this.mes.kind = this.kind
+      if (this.chiMa === undefined) {
+        this.chiMa = ''
+        this.mes.kind = this.kind
+      } else {
+        this.mes.kind = `${this.kind} ${this.chiMa}`
+      }
       let kind = this.kind
       this.mes.size = this.chiMa
       let size = this.chiMa
@@ -365,7 +370,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.bigId === bigId && currentValue.kind === kind && currentValue.size === size) {
+        if (currentValue.goodsid === goodsid && currentValue.kind === kind && currentValue.size === size) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))
