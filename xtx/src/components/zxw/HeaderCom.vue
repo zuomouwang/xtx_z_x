@@ -43,7 +43,7 @@
               <p>共 {{ this.carNum }} 件商品</p>
               <p>¥{{ this.carPrice }}</p>
             </div>
-            <a href="">去购物车结算</a>
+            <a href="#/cart">去购物车结算</a>
           </div>
         </div>
       </div>
