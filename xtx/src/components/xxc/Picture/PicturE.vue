@@ -175,7 +175,8 @@ export default {
       num: 1,
       acc: undefined,
       mes: {
-        index: -1,
+        checked: true,
+        window: false,
         id: undefined,
         name: undefined,
         picture: undefined,
@@ -301,7 +302,7 @@ export default {
         // 执行操作
       })
       e.target.classList.add('s_cor')
-      console.log(item)
+      // console.log(item)
       this.chiMa = `${this.data.specs[1].name}:${item.name}`
     },
     jian() {
@@ -366,7 +367,6 @@ export default {
       if (same) {
         return
       }
-      this.mes.index = my.cart.length
       my.cart.push(this.mes)
       // console.log(acc)
       localStorage.setItem('account', JSON.stringify(acc))
