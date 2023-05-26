@@ -10,5 +10,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+    rules: {
+    'vue/multi-word-component-names': 'off'   //关闭ESlink对于组件名必须由多单词组成检测
   }
 }
