@@ -35,10 +35,12 @@
           <em>{{ this.carNum }}</em>
         </a>
         <div class="car">
-          <div class="carList"></div>
+          <div class="carList">
+            <div class="goods" v-for="item in myCar" :key="item.id"></div>
+          </div>
           <div class="carFoot">
             <div class="footLeft">
-              <p>共{{ this.carNum }}件商品</p>
+              <p>共 {{ this.carNum }} 件商品</p>
               <p>¥{{ this.carPrice }}</p>
             </div>
             <a href="">去购物车结算</a>
@@ -55,6 +57,8 @@ export default {
   data() {
     return {
       carNum: undefined,
+      carPrice: undefined,
+      myCar: undefined,
       status: [false, false, false, false, false, false, false, false, false],
       defdata: [
         { id: '1', name: '' },
@@ -143,23 +147,23 @@ export default {
         this.status = [false, false, false, false, false, false, false, false, false]
       }, 10)
     },
-    pointer_enter() {
-      const token = localStorage.getItem('token')
-      let acc = JSON.parse(localStorage.getItem('account'))
-      let my = acc.find(item => item.name === token)
-      let num = 0
-      let price = 0
-      my.cart.forEach(function (currentValue) {
-        num += currentValue.num
-        price += currentValue.price * currentValue.num
-      })
-      this.carNum = num
-      this.carPrice = price
-      console.log(this.carPrice)
-      console.log(this.carNum)
-    }
+    pointer_enter() {}
   },
-  mounted() {},
+  mounted() {
+    const token = localStorage.getItem('token')
+    let acc = JSON.parse(localStorage.getItem('account'))
+    let my = acc.find(item => item.name === token)
+    this.myCar = my.cart
+    console.log(this.myCar)
+    let num = 0
+    let price = 0
+    this.myCar.forEach(function (currentValue) {
+      num += currentValue.num
+      price += currentValue.price * currentValue.num
+    })
+    this.carNum = num
+    this.carPrice = price
+  },
   created() {},
   updated() {}
 }
@@ -281,17 +285,18 @@ export default {
           font-size: 30px;
         }
         em {
-          width: 15px;
-          height: 15px;
+          // width: 15px;
           position: absolute;
-          right: -7px;
+          height: 14px;
+          padding: 0 6px;
+          left: 19px;
           top: -4px;
           background-color: red;
           color: #fff;
-          font-size: 13px;
+          font-size: 12px;
           text-align: center;
-          line-height: 15px;
-          border-radius: 50%;
+          line-height: 14px;
+          border-radius: 6px;
         }
       }
       .car {
