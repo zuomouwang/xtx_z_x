@@ -29,13 +29,20 @@
         <el-icon><Search /></el-icon>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart" @pointerenter="pointer_enter" @pointerleave="pointer_leave">
+      <div class="cart" @pointerenter="pointer_enter">
         <a href="#/cart">
           <el-icon class="big"><ShoppingCart /></el-icon>
-          <em>0</em>
+          <em>{{ this.carNum }}</em>
         </a>
-        <div class="all">
-          <Car v-if="car" :flag="car"></Car>
+        <div class="car">
+          <div class="carList"></div>
+          <div class="carFoot">
+            <div class="footLeft">
+              <p>共{{ this.carNum }}件商品</p>
+              <p>¥{{ this.carPrice }}</p>
+            </div>
+            <a href="">去购物车结算</a>
+          </div>
         </div>
       </div>
     </div>
@@ -44,14 +51,10 @@
 
 <script>
 let timer = 0
-import Car from '../xxc/Car/Car.vue'
 export default {
-  components: {
-    Car
-  },
   data() {
     return {
-      car: false,
+      carNum: undefined,
       status: [false, false, false, false, false, false, false, false, false],
       defdata: [
         { id: '1', name: '' },
@@ -115,14 +118,14 @@ export default {
     }
   },
   methods: {
-    pointer_enter() {
-      this.car = true
-      console.log(this.car)
-    },
-    pointer_leave() {
-      this.car = false
-      console.log(this.car)
-    },
+    // pointer_enter() {
+    //   this.car = true
+    //   console.log(this.car)
+    // },
+    // pointer_leave() {
+    //   this.car = false
+    //   console.log(this.car)
+    // },
     click_bdb(e) {
       if (!this.flag) return
       let checked = document.querySelector('.head .wrapper .list li .checked')
@@ -139,9 +142,26 @@ export default {
       timer = setTimeout(() => {
         this.status = [false, false, false, false, false, false, false, false, false]
       }, 10)
+    },
+    pointer_enter() {
+      const token = localStorage.getItem('token')
+      let acc = JSON.parse(localStorage.getItem('account'))
+      let my = acc.find(item => item.name === token)
+      let num = 0
+      let price = 0
+      my.cart.forEach(function (currentValue) {
+        num += currentValue.num
+        price += currentValue.price * currentValue.num
+      })
+      this.carNum = num
+      this.carPrice = price
+      console.log(this.carPrice)
+      console.log(this.carNum)
     }
   },
-  mounted() {}
+  mounted() {},
+  created() {},
+  updated() {}
 }
 </script>
 
@@ -253,7 +273,6 @@ export default {
       position: relative;
       width: 30px;
       height: 30px;
-      // background-color: red;
       a {
         display: block;
         width: 100%;
@@ -275,6 +294,82 @@ export default {
           border-radius: 50%;
         }
       }
+      .car {
+        position: absolute;
+        opacity: 0;
+        left: -360px;
+        top: 50px;
+        width: 400px;
+        height: 400px;
+        background-color: #27ba9b;
+        opacity: 0;
+        transition: all 0.4s 0.2s;
+        transform: translateY(-200px) scaleY(0);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        background: #fff;
+        border-radius: 8px;
+        padding-top: 10px;
+        &::before {
+          content: '';
+          position: absolute;
+          right: 10px;
+          top: -10px;
+          width: 20px;
+          height: 20px;
+          background: #fff;
+          transform: scaleX(0.6) rotate(45deg);
+          box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.1);
+        }
+        .carList {
+          height: 310px;
+          overflow: auto;
+          padding: 0 10px;
+        }
+        .carFoot {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 70px;
+          width: 100%;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          background: #f8f8f8;
+          align-items: center;
+          .footLeft {
+            padding-left: 10px;
+            color: #999;
+            p {
+              &:first-child {
+                font-size: 14px;
+              }
+              &:last-child {
+                font-size: 18px;
+                color: #cf4444;
+              }
+            }
+            // background-color: pink;
+          }
+          a {
+            width: 180px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            text-align: center;
+            color: #27ba9b;
+            background: #e6faf6;
+            border: 1px solid #27ba9b;
+            border-radius: 4px;
+          }
+        }
+      }
+      &:hover {
+        .car {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      // background-color: red;
     }
   }
   .fixed {
