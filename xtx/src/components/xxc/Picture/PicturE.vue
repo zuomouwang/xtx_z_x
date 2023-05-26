@@ -179,6 +179,7 @@ export default {
         checked: true,
         window: false,
         id: undefined,
+        bigId: undefined,
         name: undefined,
         picture: undefined,
         price: undefined,
@@ -339,8 +340,11 @@ export default {
         alert('尺码')
         return
       }
+      this.mes.bigId = this.data.id
+      // console.log(this.mes.bigId)
       this.mes.id = this.id
-      let id = this.mes.id
+      // console.log(this.mes.id)
+      let bigId = this.mes.bigId
       this.mes.name = this.data.name
       this.mes.picture = this.data.mainPictures[0]
       this.mes.price = this.price
@@ -361,7 +365,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.id === id && currentValue.kind === kind && currentValue.size === size) {
+        if (currentValue.bigId === bigId && currentValue.kind === kind && currentValue.size === size) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))

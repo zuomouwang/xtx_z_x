@@ -29,11 +29,14 @@
         <el-icon><Search /></el-icon>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart">
+      <div class="cart" @pointerenter="pointer_enter" @pointerleave="pointer_leave">
         <a href="#/cart">
           <el-icon class="big"><ShoppingCart /></el-icon>
           <em>0</em>
         </a>
+        <div class="all">
+          <Car v-if="car" :flag="car"></Car>
+        </div>
       </div>
     </div>
   </div>
@@ -41,9 +44,14 @@
 
 <script>
 let timer = 0
+import Car from '../xxc/Car/Car.vue'
 export default {
+  components: {
+    Car
+  },
   data() {
     return {
+      car: false,
       status: [false, false, false, false, false, false, false, false, false],
       defdata: [
         { id: '1', name: '' },
@@ -107,6 +115,14 @@ export default {
     }
   },
   methods: {
+    pointer_enter() {
+      this.car = true
+      console.log(this.car)
+    },
+    pointer_leave() {
+      this.car = false
+      console.log(this.car)
+    },
     click_bdb(e) {
       if (!this.flag) return
       let checked = document.querySelector('.head .wrapper .list li .checked')
