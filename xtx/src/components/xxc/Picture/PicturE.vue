@@ -168,7 +168,7 @@ export default {
       address: undefined,
       adr_item: undefined,
       ad_item: '',
-      goodsid: undefined,
+      id: undefined,
       price: undefined,
       ad: '北京市 市辖区 东城区',
       kind: undefined,
@@ -278,7 +278,7 @@ export default {
         // 执行操作
       })
       e.target.classList.add('s_cor')
-      let goodsid = this.goodsid
+      let id = this.id
       // console.log(item)
       this.data.skus.forEach(function (currentValue) {
         // console.log(currentValue.specs[0].valueName)
@@ -286,10 +286,10 @@ export default {
           // console.log(currentValue)
           prices[0].textContent = currentValue.price
           prices[1].textContent = currentValue.oldPrice
-          goodsid = currentValue.id
+          id = currentValue.id
         }
       })
-      this.goodsid = goodsid
+      this.id = id
       this.price = prices[0].textContent
       // const color = e.target.getAttribute('color')
       // // console.log(e.target.src);
@@ -340,11 +340,11 @@ export default {
         alert('尺码')
         return
       }
-      this.mes.id = this.data.id
+      this.mes.goodsid = this.data.id
       // console.log(this.mes.bigId)
-      this.mes.goodsid = this.goodsid
+      this.mes.id = this.id
       // console.log(this.mes.id)
-      let goodsid = this.mes.goodsid
+      let id = this.mes.id
       this.mes.name = this.data.name
       this.mes.picture = this.data.mainPictures[0]
       this.mes.price = this.price
@@ -370,7 +370,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.goodsid === goodsid && currentValue.kind === kind && currentValue.size === size) {
+        if (currentValue.id === id && currentValue.kind === kind && currentValue.size === size) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))
