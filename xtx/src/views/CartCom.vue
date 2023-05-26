@@ -8,258 +8,86 @@
       </div>
       <div class="goods">
         <div class="nav">
-          <div class="all"><input type="checkbox" /><span>全选</span></div>
+          <div class="all"><input type="checkbox" v-model="allchecked" /><span>全选</span></div>
           <div class="goodsmsg"><p>商品信息</p></div>
           <div class="price"><p>单价</p></div>
           <div class="count"><p>数量</p></div>
           <div class="total"><p>总价</p></div>
           <div class="remove"><p>操作</p></div>
         </div>
-        <div class="item">
-          <div class="all"><input type="checkbox" /><span> </span></div>
+        <div class="item" v-for="i in list" :key="i.index">
+          <div class="all">
+            <input type="checkbox" v-model="i.checked" ref="checked" @click="storage(i.index)" /><span> </span>
+          </div>
           <div class="goodsmsg">
-            <a href="JavaScript:;" class="left">
-              <img src="" alt="" />
+            <a :href="'#/Goods/' + i.goodsid" class="left">
+              <img :src="i.picture" :alt="i.name" />
             </a>
             <div class="right">
-              <p>dasdsafjdklsa;hfjsdhgklshg;kdhsagjhfgkhhhhhhhhhhhhhhhh</p>
+              <p>{{ i.name }}</p>
               <div class="sku">
-                <!-- <div class="selection">
-                  <el-popover
-                    placement="bottom"
-                    title=""
-                    :width="400"
-                    trigger="click"
-                    content="this is content, this is content, this is content"
-                    hide-after="0"
-                    :visible="visible"
-                  >
-                    <div class="sku">
-                      <div class="left"><span>颜色</span></div>
-                      <div class="right">
-                        <img
-                          class="checked"
-                          src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png"
-                          alt=""
-                        />
-                        <img src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                      </div>
-                    </div>
-                    <div class="sku">
-                      <div class="left"><span>尺码</span></div>
-                      <div class="right">
-                        <span class="checked">男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                      </div>
-                    </div>
-                    <el-button size="small" text @click="visible = false">取消</el-button>
-                    <el-button size="small" type="primary" @click="visible = false">确定</el-button>
-
-                    <template #reference>
-                      <el-button class="m-2" @click="visible = true">
-                        颜色:浅蓝色 尺码:女L（39-40） <el-icon><ArrowDown /> </el-icon
-                      ></el-button>
-                    </template>
-                  </el-popover>
-                </div> -->
-                <span class="description" @click="visible = true">
-                  颜色:浅蓝色 尺码:女L（39-40） <el-icon><ArrowDown /> </el-icon>
+                <span class="description" @click="windowdisp($event, i.index)">
+                  {{ i.kind }} <el-icon><ArrowDown /> </el-icon>
                 </span>
-                <div :class="['selection', visible ? 'selected' : '']">
-                  <div class="sku1">
-                    <div class="left"><span>颜色</span></div>
-                    <div class="right">
+                <div
+                  v-if="windowdata"
+                  :class="['selection', i.window ? 'selected' : '', !windowflag ? 'none' : '']"
+                  :index="i.index"
+                  v-loading="!windowflag"
+                >
+                  <div class="sku1" v-for="(i, index) in windowdata.specs" :key="index">
+                    <div class="left">
+                      <span>{{ i.name }}</span>
+                    </div>
+                    <div class="right" v-if="i.values[0].picture">
                       <img
-                        class="checked"
-                        src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png"
-                        alt=""
+                        :src="i.picture"
+                        :alt="i.name"
+                        v-for="(i, num) in i.values"
+                        :key="num"
+                        :class="[i.checked ? 'checked' : '']"
+                        @click="sku(index, num)"
                       />
-                      <img src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
+                    </div>
+                    <div class="right" v-else>
+                      <span
+                        v-for="(i, num) in i.values"
+                        :key="num"
+                        :class="[i.checked ? 'checked' : '']"
+                        @click="sku(index, num)"
+                        >{{ i.name }}</span
+                      >
                     </div>
                   </div>
-                  <div class="sku1">
-                    <div class="left"><span>尺码</span></div>
-                    <div class="right">
-                      <span class="checked">男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                    </div>
-                  </div>
-                  <el-button size="small" text @click=";(visible = false), (this.dispflag = false)">取消</el-button>
-                  <el-button size="small" type="primary" @click=";(visible = false), (this.dispflag = false)"
-                    >确定</el-button
-                  >
+                  <el-button size="small" text @click=";(i.window = false), (this.dispflag = false)">取消</el-button>
+                  <el-button size="small" type="primary" @click="isOk(i)"> 确定 </el-button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="price"><p>￥99.00</p></div>
-          <div class="count">
-            <a href="Javascript:;">-</a>
-            <em>50</em>
-            <a href="JavaScript:;">+</a>
+          <div class="price">
+            <p>￥{{ i.price }}</p>
           </div>
-          <div class="total"><p>￥99.00</p></div>
-          <div class="remove"><a href="JavaScript:;">删除</a></div>
+          <div class="count">
+            <a href="Javascript:;" @click="subtract(i.index)">-</a>
+            <em>{{ i.num }}</em>
+            <a href="JavaScript:;" @click="add(i.index)">+</a>
+          </div>
+          <div class="total">
+            <p>￥{{ i.total }}</p>
+          </div>
+          <div class="remove"><a href="JavaScript:;" :index="i.index" @click="remove(i.index)">删除</a></div>
         </div>
-        <div class="item">
-          <div class="all"><input type="checkbox" /><span> </span></div>
-          <div class="goodsmsg">
-            <a href="JavaScript:;" class="left">
-              <img src="" alt="" />
-            </a>
-            <div class="right">
-              <p>dasdsafjdklsa;hfjsdhgklshg;kdhsagjhfgkhhhhhhhhhhhhhhhh</p>
-              <div class="sku">
-                <!-- <div class="selection">
-                  <el-popover
-                    placement="bottom"
-                    title=""
-                    :width="400"
-                    trigger="click"
-                    content="this is content, this is content, this is content"
-                    hide-after="0"
-                    :visible="visible"
-                  >
-                    <div class="sku">
-                      <div class="left"><span>颜色</span></div>
-                      <div class="right">
-                        <img
-                          class="checked"
-                          src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png"
-                          alt=""
-                        />
-                        <img src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                        <img src="" alt="" />
-                      </div>
-                    </div>
-                    <div class="sku">
-                      <div class="left"><span>尺码</span></div>
-                      <div class="right">
-                        <span class="checked">男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                        <span>男L（42-43）</span>
-                      </div>
-                    </div>
-                    <el-button size="small" text @click="visible = false">取消</el-button>
-                    <el-button size="small" type="primary" @click="visible = false">确定</el-button>
-
-                    <template #reference>
-                      <el-button class="m-2" @click="visible = true">
-                        颜色:浅蓝色 尺码:女L（39-40） <el-icon><ArrowDown /> </el-icon
-                      ></el-button>
-                    </template>
-                  </el-popover>
-                </div> -->
-                <span class="description" @click="visible = true">
-                  颜色:浅蓝色 尺码:女L（39-40） <el-icon><ArrowDown /> </el-icon>
-                </span>
-                <div :class="['selection', visible ? 'selected' : '']">
-                  <div class="sku1">
-                    <div class="left"><span>颜色</span></div>
-                    <div class="right">
-                      <img
-                        class="checked"
-                        src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png"
-                        alt=""
-                      />
-                      <img src="https://yanxuan-item.nosdn.127.net/174c942c9fb368aa23021ac778387ced.png" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                      <img src="" alt="" />
-                    </div>
-                  </div>
-                  <div class="sku1">
-                    <div class="left"><span>尺码</span></div>
-                    <div class="right">
-                      <span class="checked">男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                      <span>男L（42-43）</span>
-                    </div>
-                  </div>
-                  <el-button size="small" text @click=";(visible = false), (this.dispflag = false)">取消</el-button>
-                  <el-button size="small" type="primary" @click=";(visible = false), (this.dispflag = false)"
-                    >确定</el-button
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="price"><p>￥99.00</p></div>
-          <div class="count">
-            <a href="Javascript:;">-</a>
-            <em>50</em>
-            <a href="JavaScript:;">+</a>
-          </div>
-          <div class="total"><p>￥99.00</p></div>
-          <div class="remove"><a href="JavaScript:;">删除</a></div>
-        </div>
-        <!-- <div class="item">
-          <div class="all"><input type="checkbox" /><span> </span></div>
-          <div class="goodsmsg">
-            <a href="JavaScript:;" class="left">
-              <img src="" alt="" />
-            </a>
-            <div class="right">
-              <p>dasdsafjdklsa;hfjsdhgklshg;kdhsagjhfgkhhhhhhhhhhhhhhhh</p>
-              <div class="sku">
-                <sapn class="description">
-                  颜色:浅蓝色 尺码:女L（39-40） <el-icon><ArrowDown /> </el-icon>
-                </sapn>
-                <div class="selection"></div>
-              </div>
-            </div>
-          </div>
-          <div class="price"><p>￥99.00</p></div>
-          <div class="count">
-            <a href="Javascript:;">-</a>
-            <em>50</em>
-            <a href="JavaScript:;">+</a>
-          </div>
-          <div class="total"><p>￥99.00</p></div>
-          <div class="remove"><a href="JavaScript:;">删除</a></div>
-        </div> -->
       </div>
       <div class="foot">
-        <div class="all"><input type="checkbox" /><span>全选</span></div>
-        <a href="JavaScript:;">删除商品</a>
+        <div class="all"><input type="checkbox" v-model="allchecked" /><span>全选</span></div>
+        <a href="JavaScript:;" @click="removechecked">删除商品</a>
         <div class="emp"></div>
-        <span>共 33 件</span>
-        <span>已选择 33 件</span>
-        <span>合计：<em>￥99</em></span>
+        <span>共 {{ allnum }} 件</span>
+        <span>已选择 {{ checkednum }} 件</span>
+        <span
+          >合计：<em>￥{{ money }}</em></span
+        >
         <button>下单结算</button>
       </div>
     </div>
@@ -269,23 +97,75 @@
 
 <script>
 import GoodsRe from '../components/zxw/GoodsRelevant.vue'
+
 export default {
   data() {
     return {
-      relevant: undefined,
-      flag: false,
-      visible: false,
-      dispflag: false
+      relevant: undefined, // 获取数据
+      flag: false, //加载标志
+      windowflag: false, //小窗加载标志
+      visible: false, //小窗显示的标志
+      dispflag: true, //下窗显示的标志 (与关闭小窗有关)
+      list: undefined, //用户购物车
+      user: undefined, //当前用户
+      windowdata: undefined
+      // allchecked: false, //全选标志
+      // checkednum: undefined, //已选择多少商品
+      // allnum: undefined //所有商品数量
     }
   },
   components: {
     GoodsRe
   },
+  computed: {
+    allchecked: {
+      get() {
+        return this.list.every(i => i.checked == true)
+      },
+      set(newval) {
+        this.list.forEach(i => {
+          i.checked = newval
+        })
+        let cart = JSON.parse(localStorage.getItem('account'))
+        let index = cart.findIndex(i => {
+          return i.name == this.user
+        })
+        cart[index].cart = this.list
+        localStorage.setItem('account', JSON.stringify(cart))
+      }
+    },
+    checkednum() {
+      let list = this.list.filter(i => i.checked == true)
+      let num = 0
+      list.forEach(i => {
+        num = num + i.num
+      })
+      return num
+    },
+    allnum() {
+      let num = 0
+      this.list.forEach(i => {
+        num = num + i.num
+      })
+      return num
+    },
+    money() {
+      let list = this.list.filter(i => i.checked == true)
+      let num = 0
+      list.forEach(i => {
+        num = num + Number.parseFloat(i.total)
+      })
+      return num.toFixed(2)
+    }
+  },
   methods: {
     hide(e) {
       let target = document.querySelector('.cart .wrapper .goods .item .goodsmsg .right .sku .selected')
       if (!target) return
-      console.log(getAllDescendants(target))
+
+      let index = this.list.findIndex(i => {
+        return i.index == target.getAttribute('index')
+      })
       let arr = getAllDescendants(target)
       function getAllDescendants(element) {
         const descendants = []
@@ -301,19 +181,163 @@ export default {
             }
           }
         }
-
         traverse(element)
         return descendants
       }
 
       if (arr.findIndex(i => i == e.target) == -1) {
         if (!this.dispflag) return (this.dispflag = !this.dispflag)
-        this.visible = false
+        this.list[index].window = false
         this.dispflag = false
+        this.windowflag = false
+        // this.windowdata = undefined
       }
+    },
+    add(id) {
+      let index = this.list.findIndex(i => {
+        return i.index == id
+      })
+      if (this.list[index].num == 99) return
+      this.list[index].num++
+      this.list[index].total = (this.list[index].num * this.list[index].price).toFixed(2)
+      let cart = JSON.parse(localStorage.getItem('account'))
+      index = cart.findIndex(i => {
+        return i.name == this.user
+      })
+      cart[index].cart = this.list
+      localStorage.setItem('account', JSON.stringify(cart))
+    },
+    subtract(id) {
+      let index = this.list.findIndex(i => {
+        return i.index == id
+      })
+      if (this.list[index].num == 1) return
+      this.list[index].num--
+      this.list[index].total = (this.list[index].num * this.list[index].price).toFixed(2)
+      let cart = JSON.parse(localStorage.getItem('account'))
+      index = cart.findIndex(i => {
+        return i.name == this.user
+      })
+      cart[index].cart = this.list
+      localStorage.setItem('account', JSON.stringify(cart))
+    },
+    removechecked() {
+      let arr = []
+      this.list.forEach((i, index) => {
+        if (i.checked == true) {
+          arr.push(index)
+        }
+      })
+      if (arr.length == 0) return
+      arr.reverse()
+      arr.forEach(i => {
+        this.list.splice(i, 1)
+      })
+      let cart = JSON.parse(localStorage.getItem('account'))
+      let index = cart.findIndex(i => {
+        return i.name == this.user
+      })
+      cart[index].cart = this.list
+      localStorage.setItem('account', JSON.stringify(cart))
+    },
+    remove(id) {
+      let index = this.list.findIndex(i => {
+        return i.index == id
+      })
+      this.list.splice(index, 1)
+      let cart = JSON.parse(localStorage.getItem('account'))
+      index = cart.findIndex(i => {
+        return i.name == this.user
+      })
+      cart[index].cart = this.list
+      localStorage.setItem('account', JSON.stringify(cart))
+    },
+    storage() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          let cart = JSON.parse(localStorage.getItem('account'))
+          let index = cart.findIndex(i => {
+            return i.name == this.user
+          })
+          cart[index].cart = this.list
+          localStorage.setItem('account', JSON.stringify(cart))
+        }, 0)
+      })
+    },
+    async windowdisp(e, id) {
+      let index = this.list.findIndex(i => {
+        return i.index == id
+      })
+      this.list[index].window = true
+      // this.dispflag = true
+      this.hide(e)
+      const { data: res } = await this.$http.get(`goods/sku/${this.list[index].id}`, {})
+      res.result.specs.forEach(i => {
+        i.values.forEach((i, index) => {
+          if (index == 0) {
+            i.checked = true
+          } else {
+            i.checked = false
+          }
+        })
+      })
+      this.windowdata = res.result
+      this.windowflag = true
+    },
+    sku(index, num) {
+      this.windowdata.specs[index].values.forEach(i => {
+        i.checked = false
+      })
+      this.windowdata.specs[index].values[num].checked = true
+    },
+    isOk(i) {
+      i.window = false
+      this.dispflag = false
+      let str = ''
+      let kind = []
+      let name = []
+      this.windowdata.specs.forEach(i => {
+        str = str + i.name + ':'
+        let arr = i.values.filter(i => {
+          return i.checked == true
+        })
+        kind.push(arr[0].name)
+        name.push(i.name)
+        str = str + arr[0].name + ' '
+      })
+      let index = kind.length
+      let arr = this.windowdata.skus
+      for (let i = 0; i < index; i++) {
+        arr = arr.filter(e => {
+          return e.specs[i].valueName == kind[i]
+        })
+      }
+      // console.log(arr[0])
+      // console.log(i)
+      i.id = arr[0].id
+      i.price = arr[0].price
+      i.total = (i.num * arr[0].price).toFixed(2)
+      i.kind = str
+      let cart = JSON.parse(localStorage.getItem('account'))
+      index = cart.findIndex(i => {
+        return i.name == this.user
+      })
+      cart[index].cart = this.list
+      localStorage.setItem('account', JSON.stringify(cart))
     }
   },
   async created() {
+    let cart = JSON.parse(localStorage.getItem('account'))
+    cart.forEach(i => {
+      i.cart.forEach((i, index) => {
+        i.total = (i.num * i.price).toFixed(2)
+        i.index = index
+      })
+    })
+    this.list = cart[cart.findIndex(i => i.name == localStorage.getItem('token'))].cart
+    // console.log(cart[cart.findIndex(i => i.name == localStorage.getItem('token'))].cart)
+    this.user = localStorage.getItem('token')
+
     const { data: relevant } = await this.$http.get('goods/relevant', {
       params: {
         id: 4000635,
@@ -324,7 +348,8 @@ export default {
     setTimeout(() => {
       this.flag = true
     }, 500)
-  }
+  },
+  beforeUnmount() {}
 }
 </script>
 
@@ -427,6 +452,7 @@ export default {
                       border: 1px solid var(--lv);
                     }
                     img {
+                      cursor: pointer;
                       border: 1px solid #e4e4e4;
                       width: 48px;
                       height: 48px;
@@ -461,6 +487,14 @@ export default {
               }
               .selected {
                 display: block;
+              }
+              .none .sku1,
+              .none button {
+                display: none;
+              }
+              .none {
+                width: 400px;
+                height: 200px;
               }
             }
           }
