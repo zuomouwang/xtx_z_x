@@ -373,7 +373,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.id === id ) {
+        if (currentValue.id === id) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))
@@ -386,7 +386,7 @@ export default {
         return
       }
       my.cart.push(this.mes)
-      // console.log(acc)
+      console.log(my === acc[1])
       localStorage.setItem('account', JSON.stringify(acc))
     }
   },

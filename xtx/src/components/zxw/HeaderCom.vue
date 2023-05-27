@@ -72,6 +72,7 @@ export default {
       localStorage_time: undefined,
       token: undefined,
       account: undefined,
+      user: undefined,
       myCar: undefined,
 
       carNum: undefined,
@@ -182,8 +183,18 @@ export default {
   mounted() {
     console.log(location.hash)
     this.localStorage_time = setInterval(() => {
+      // if (
+      //   localStorage.getItem('token') === null ||
+      //   !JSON.parse(localStorage.getItem('account')) ||
+      //   !localStorage.getItem('user')
+      // ) {
+      //   localStorage.setItem('token', JSON.stringify(this.token))
+      //   localStorage.setItem('account', JSON.stringify(this.account))
+      //   localStorage.setItem('user', JSON.stringify(this.user))
+      // }
       this.token = localStorage.getItem('token')
       this.account = JSON.parse(localStorage.getItem('account'))
+      this.user = JSON.parse(localStorage.getItem('user'))
       this.myCar = this.account.find(item => item.name === this.token).cart
       let num = 0
       let price = 0
