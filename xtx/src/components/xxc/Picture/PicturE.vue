@@ -171,6 +171,7 @@ export default {
       id: undefined,
       price: undefined,
       ad: '北京市 市辖区 东城区',
+      style: undefined,
       kind: undefined,
       chiMa: undefined,
       num: 1,
@@ -185,6 +186,7 @@ export default {
         price: undefined,
         address: undefined,
         kind: undefined,
+        style: undefined,
         size: undefined,
         num: undefined
       }
@@ -293,7 +295,8 @@ export default {
       this.price = prices[0].textContent
       // const color = e.target.getAttribute('color')
       // // console.log(e.target.src);
-      this.kind = `${this.data.specs[0].name}:${item.name}`
+      this.style = `${this.data.specs[0].name}:${item.name}`
+      // this.kind = `${this.data.specs[0].name}:${item.name}`
       // // console.log(color)
       // price[0].textContent = this.data.skus[color].price
       // price[1].textContent = this.data.skus[color].oldPrice
@@ -332,7 +335,7 @@ export default {
         alert('未登录')
         return
       }
-      if (this.kind === undefined) {
+      if (this.style === undefined) {
         alert('规格')
         return
       }
@@ -352,12 +355,12 @@ export default {
       this.mes.address = this.ad
       let address = this.ad
       if (this.chiMa === undefined) {
-        this.chiMa = ''
-        this.mes.kind = this.kind
+        this.mes.kind = this.style
       } else {
-        this.mes.kind = `${this.kind} ${this.chiMa}`
+        this.mes.kind = `${this.style} ${this.chiMa}`
       }
-      let kind = this.kind
+      this.mes.style = this.style
+      let style = this.style
       this.mes.size = this.chiMa
       let size = this.chiMa
       this.mes.num = this.num
@@ -370,7 +373,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.id === id && currentValue.kind === kind && currentValue.size === size) {
+        if (currentValue.id === id && currentValue.style === style && currentValue.size === size) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))
