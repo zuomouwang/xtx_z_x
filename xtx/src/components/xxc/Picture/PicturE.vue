@@ -360,9 +360,9 @@ export default {
         this.mes.kind = `${this.style} ${this.chiMa}`
       }
       this.mes.style = this.style
-      let style = this.style
+      // let style = this.style
       this.mes.size = this.chiMa
-      let size = this.chiMa
+      // let size = this.chiMa
       this.mes.num = this.num
       let num = this.num
       // console.log(this.mes)
@@ -373,7 +373,7 @@ export default {
       let my = acc.find(item => item.name === token)
       my.cart.forEach(function (currentValue) {
         // if (currentValue.id === this.mes.id) {
-        if (currentValue.id === id && currentValue.style === style && currentValue.size === size) {
+        if (currentValue.id === id ) {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))

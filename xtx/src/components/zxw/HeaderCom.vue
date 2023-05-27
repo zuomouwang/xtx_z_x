@@ -180,6 +180,7 @@ export default {
   },
   created() {},
   mounted() {
+    console.log(location.hash)
     this.localStorage_time = setInterval(() => {
       this.token = localStorage.getItem('token')
       this.account = JSON.parse(localStorage.getItem('account'))
@@ -191,7 +192,7 @@ export default {
         price += currentValue.price * currentValue.num
       })
       this.carNum = num
-      if (this.carNum === 0) {
+      if (this.carNum === 0 || location.hash === '#/cart') {
         const car = document.querySelector('.car')
         car.style.opacity = 0
       } else {
