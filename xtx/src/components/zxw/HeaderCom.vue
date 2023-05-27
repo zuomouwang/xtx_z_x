@@ -29,14 +29,27 @@
         <el-icon><Search /></el-icon>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart" @pointerenter="pointer_enter">
+      <div class="cart">
         <a href="#/cart">
           <el-icon class="big"><ShoppingCart /></el-icon>
           <em>{{ this.carNum }}</em>
         </a>
         <div class="car">
           <div class="carList">
-            <div class="goods" v-for="item in myCar" :key="item.id"></div>
+            <div class="goods" v-for="item in myCar" :key="item.id">
+              <a href="#/cart">
+                <img :src="item.picture" alt="" />
+                <div class="mes">
+                  <p>{{ item.name }}</p>
+                  <p>{{ item.kind }}</p>
+                </div>
+                <div class="numP">
+                  <p>¥{{ item.price }}</p>
+                  <p>x{{ item.num }}</p>
+                </div>
+              </a>
+              <i class="iconfont icon-close" @click="del($event, item)"></i>
+            </div>
           </div>
           <div class="carFoot">
             <div class="footLeft">
@@ -56,9 +69,14 @@ let timer = 0
 export default {
   data() {
     return {
+      localStorage_time: undefined,
+      token: undefined,
+      account: undefined,
+      myCar: undefined,
+
       carNum: undefined,
       carPrice: undefined,
-      myCar: undefined,
+
       status: [false, false, false, false, false, false, false, false, false],
       defdata: [
         { id: '1', name: '' },
@@ -147,24 +165,42 @@ export default {
         this.status = [false, false, false, false, false, false, false, false, false]
       }, 10)
     },
-    pointer_enter() {}
-  },
-  mounted() {
-    const token = localStorage.getItem('token')
-    let acc = JSON.parse(localStorage.getItem('account'))
-    let my = acc.find(item => item.name === token)
-    this.myCar = my.cart
-    console.log(this.myCar)
-    let num = 0
-    let price = 0
-    this.myCar.forEach(function (currentValue) {
-      num += currentValue.num
-      price += currentValue.price * currentValue.num
-    })
-    this.carNum = num
-    this.carPrice = price
+    del(e, item) {
+      let myCar = this.myCar
+      this.myCar.forEach(function (i, index) {
+        console.log(i)
+        if (i.id === item.id) {
+          myCar.splice(index, 1)
+          console.log(myCar)
+        }
+      })
+      this.myCar = myCar
+      localStorage.setItem('account', JSON.stringify(this.account))
+    }
   },
   created() {},
+  mounted() {
+    this.localStorage_time = setInterval(() => {
+      this.token = localStorage.getItem('token')
+      this.account = JSON.parse(localStorage.getItem('account'))
+      this.myCar = this.account.find(item => item.name === this.token).cart
+      let num = 0
+      let price = 0
+      this.myCar.forEach(function (currentValue) {
+        num += currentValue.num
+        price += currentValue.price * currentValue.num
+      })
+      this.carNum = num
+      if (this.carNum === 0) {
+        const car = document.querySelector('.car')
+        car.style.opacity = 0
+      } else {
+        const car = document.querySelector('.car')
+        car.style.opacity = 1
+      }
+      this.carPrice = price
+    }, 10)
+  },
   updated() {}
 }
 </script>
@@ -329,6 +365,78 @@ export default {
           height: 310px;
           overflow: auto;
           padding: 0 10px;
+          .goods {
+            border-bottom: 1px solid #f5f5f5;
+            padding: 15px 0;
+            position: relative;
+            &:hover {
+              i {
+                opacity: 1;
+                cursor: pointer;
+              }
+            }
+            a {
+              display: flex;
+              align-items: center;
+              img {
+                height: 80px;
+                width: 80px;
+                vertical-align: middle;
+              }
+              .mes {
+                padding: 0 10px;
+                width: 200px;
+                // background-color: cornflowerblue;
+                p:first-child {
+                  font-size: 16px;
+                  // white-space: nowrap; /* 文本不允许换行 */
+                  overflow: hidden; /* 超出部分隐藏 */
+                  text-overflow: ellipsis; /* 超出部分显示为省略号 */
+                  display: -webkit-box; /* 将元素作为弹性伸缩盒子模型显示 */
+                  -webkit-line-clamp: 2; /* 限制元素最多显示两行 */
+                  -webkit-box-orient: vertical; /* 设置元素内文本垂直方向排列 */
+                }
+                p:last-child {
+                  color: #999;
+                  font-size: 14px;
+                  padding-top: 5px;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap; /* 文本不允许换行 */
+                }
+              }
+              .numP {
+                width: 100px;
+                padding-right: 20px;
+                text-align: center;
+                p:first-child {
+                  font-size: 16px;
+                  color: #cf4444;
+                }
+                p:last-child {
+                  color: #999;
+                  margin-top: 5px;
+                  font-size: 16px;
+                }
+              }
+              &:hover {
+                i {
+                  opacity: 1;
+                }
+              }
+            }
+            i {
+              position: absolute;
+              // z-index: 99;
+              bottom: 38px;
+              right: 0;
+              // width:20px;
+              // height: 20px;
+              opacity: 0;
+              color: #666;
+              transition: all 0.5s;
+            }
+          }
         }
         .carFoot {
           position: absolute;

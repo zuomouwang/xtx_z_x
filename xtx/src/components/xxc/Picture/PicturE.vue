@@ -5,19 +5,19 @@
         <div>
           <a href="">首页</a>
         </div>
-        <i class="iconfont icon-arrow-right-bold"></i>
+        <i class="iconfont icon-arrow-right"></i>
         <div>
           <a href="">
             {{ this.data.categories[1].name }}
           </a>
         </div>
-        <i class="iconfont icon-arrow-right-bold"></i>
+        <i class="iconfont icon-arrow-right"></i>
         <div>
           <a href="">
             {{ this.data.categories[0].name }}
           </a>
         </div>
-        <i class="iconfont icon-arrow-right-bold"></i>
+        <i class="iconfont icon-arrow-right"></i>
         <span>{{ this.data.name }}</span>
       </div>
       <div class="allBox">
@@ -51,28 +51,28 @@
               <p>销量人气</p>
               <p>200+</p>
               <p>
-                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>销量人气</a>
+                <a href="javascript:;"><i class="iconfont icon-task"></i>销量人气</a>
               </p>
             </li>
             <li>
               <p>商品评价</p>
               <p>400+</p>
               <p>
-                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>查看评论</a>
+                <a href="javascript:;"><i class="iconfont icon-task"></i>查看评论</a>
               </p>
             </li>
             <li>
               <p>销量人气</p>
               <p>600+</p>
               <p>
-                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>收藏商品</a>
+                <a href="javascript:;"><i class="iconfont icon-task"></i>收藏商品</a>
               </p>
             </li>
             <li>
               <p>品牌信息</p>
               <p>苏宁电器</p>
               <p>
-                <a href="javascript:;"><i class="iconfont icon-qizhi"></i>品牌主页</a>
+                <a href="javascript:;"><i class="iconfont icon-task"></i>品牌主页</a>
               </p>
             </li>
           </ul>
@@ -96,7 +96,7 @@
                 <div class="city">
                   <div class="select" @click="city">
                     <span>{{ this.ad }}</span
-                    ><i class="iconfont icon-arrow-down-bold"></i>
+                    ><i class="iconfont icon-arrow-down"></i>
                   </div>
                   <div class="option" v-if="flag">
                     <span v-for="item in address" :key="item.code" @click="tag(item, address)">
@@ -381,6 +381,7 @@ export default {
         }
         // }
       })
+      // console.log(id)
       if (same) {
         return
       }
