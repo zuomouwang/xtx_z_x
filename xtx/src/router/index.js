@@ -32,7 +32,6 @@ const router = createRouter({
     {
       path: '/login/:type', component: LogIn, props: true
     }
-
   ]
 })
 

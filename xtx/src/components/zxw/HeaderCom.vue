@@ -220,7 +220,7 @@ export default {
 <style lang="less" scoped>
 .head {
   position: sticky;
-  z-index: 2000;
+  z-index: 2002;
   top: 0;
   left: 0;
   width: 100%;
