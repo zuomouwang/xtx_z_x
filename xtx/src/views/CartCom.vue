@@ -736,7 +736,7 @@ input[type='checkbox'] {
   }
 }
 .item_have {
-  display: none:
-  color:#fff
+  display: none;
+  color: #fff;
 }
 </style>
