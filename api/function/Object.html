@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    const obj1 = {
+      age: 55,
+      name: 'zxw',
+      sayMeg() {
+        return console.log(`my name:${this.name},age:${this.age}`);
+      },
+      obj: {
+        name: 'mmm'
+      }
+    }
+      //  1.Object.assign({}, obj) 将一个或多个源对象的属性复制到目标对象中。 不可深拷贝
+      ; (function () {
+        console.log('1.-------------------------------------------------------');
+        console.log('Object.assign()');
+        const obj2 = Object.assign({}, obj1)
+        console.log(obj2, obj2.obj == obj1.obj); //验证不是深拷贝
+      }())
+      // 2.Object.create(obj1) 创建一个新对象，使用现有对象作为新对象的原型 不可深拷贝
+      ; (function () {
+        console.log('2.-------------------------------------------------------');
+        console.log('Object.create()');
+        const obj3 = Object.create(obj1)
+        obj3.name = 'yym'
+        console.log(obj1.obj == obj3.obj); //验证不是深拷贝
+        obj3.sayMeg()
+      }())
+      //  3.Object.defineProperty() 实现vue动态监听数据(简易版) 
+      // Object.defineProperties() 与Object.defineProperty()方法差不多 
+      // Object.defineProperties(obj, {
+      // prop1: {
+      //     value: 1,
+      //     writable: true
+      //   },
+      //   prop2: {
+      //     value: 2,
+      //     writable: false
+      //   }
+      // });
+      ; (function () {
+        console.log('3.-------------------------------------------------------');
+        console.log('Object.defineProperty()');
+        const robj = {
+          name: 'zxw',
+          age: 45
+        }
+        function res(obj = {}) {
+          let arr = Object.keys(obj)
+          let resobj = {}
+          for (let i = 0; i < arr.length; i++) {
+            Object.defineProperty(resobj, arr[i], {
+              get() {
+                return obj[arr[i]]
+              },
+              set(val) {
+                obj[arr[i]] = val
+              }
+            })
+          }
+          return resobj
+        }
+        let data = res(robj)
+        console.log(data);
+      }())
+      //  4.Object.entries(obj) obj 对象的键值对转换为数组，并将其表示为键值对的数组。
+      ; (function () {
+        console.log('4.-------------------------------------------------------');
+        console.log('Object.entries()');
+        let arr = Object.entries(obj1)
+        console.log(arr);
+      }())
+      // 5.Object.freeze(obj)冻结对象禁止添加、修改和删除属性
+      ; (function () {
+        console.log('5.-------------------------------------------------------');
+        console.log('Object.freeze()');
+        let obj = {
+          name: 'zxw',
+          age: 45
+        }
+        Object.freeze(obj)
+        obj.name = 'yym' //尝试修改参数 name
+        obj.age = 110 //尝试修改参数 age
+        console.log(obj);
+      }())
+      // 6.Object.getOwnPropertyDescriptors(obj) Object.getOwnPropertyDescriptor(obj,key) 返回 obj 对象的所有属性的属性描述符
+      ; (function () {
+        console.log('6.-------------------------------------------------------');
+        console.log('Object.getOwnPropertyDescriptors()');
+        let obj = {
+          name: 'zxw',
+          age: 45
+        }
+        console.log(Object.getOwnPropertyDescriptors(obj));
+        console.log(Object.getOwnPropertyDescriptor(obj, 'name'));
+      }())
+      // 7.Object.getOwnPropertyNames(obj) 返回一个数组，其中包含给定对象自身的所有属性名称 不可枚举的也可以显示出来
+      ; (function () {
+        console.log('7.-------------------------------------------------------');
+        console.log('Object.getOwnPropertyNames()');
+        let obj = {
+          name: 'zxw',
+          age: 45,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.defineProperty(obj, 'name', {
+          enumerable: false
+        })
+        console.log(Object.getOwnPropertyNames(obj));
+      }())
+      // 8.Object.getOwnPropertySymbols(obj) 返回一个数组 obj 对象自身的所有符号属性。
+      ; (function () {
+        console.log('8.-------------------------------------------------------');
+        console.log('Object.getOwnPropertySymbols()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        console.log(Object.getOwnPropertySymbols(obj));
+        // 符号属性
+        // Object.getOwnPropertySymbols(obj).forEach(i => {
+        //   console.log(obj[i]);
+        // })
+      }())
+      // 9.Object.getPrototypeOf(obj) 返回指定对象的原型。
+      ; (function () {
+        console.log('9.-------------------------------------------------------');
+        console.log('Object.getPrototypeOf()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        console.log(Object.getPrototypeOf(Object.getPrototypeOf(obj)));
+      }())
+      // 10.Object.is(obj) 比较两个数值是否相等
+      ; (function () {
+        console.log('10.-------------------------------------------------------');
+        console.log('Object.is()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        console.log(Object.is(NaN, NaN));
+        console.log(Object.is(-0, -0));
+      }())
+      // 11.Object.keys(obj) 返回一个数组，其中包含给定对象自身的所有可枚举属性名称。 
+      ; (function () {
+        console.log('11.-------------------------------------------------------');
+        console.log('Object.keys()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.defineProperty(obj, 'name', {
+          enumerable: false
+        })
+        console.log(Object.keys(obj));
+      }())
+      // 12.Object.seal(obj) 封闭对象，防止添加或删除属性。
+      ; (function () {
+        console.log('12.-------------------------------------------------------');
+        console.log('Object.seal()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.seal(obj)
+        obj.name = 'yym'
+        obj.eyes = 2
+        console.log(obj);
+      }())
+      // 13.Object.setPrototypeOf(obj,prototype) 置一个指定对象的原型（即，内部[[Prototype]]属性）到另一个对象或null
+      ; (function () {
+        console.log('13.-------------------------------------------------------');
+        console.log('Object.setPrototypeOf()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        let obj2 = {}
+        Object.setPrototypeOf(obj2, obj)
+        console.log(Object.getPrototypeOf(obj2));
+        console.log(obj2);
+      }())
+      // 14.Object.values(obj) 返回一个数组，其中包含给定对象自身可枚举属性的值。
+      ; (function () {
+        console.log('14.-------------------------------------------------------');
+        console.log('Object.values()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        console.log(Object.values(obj));
+      }())
+      // 15.Object.fromEntries(arr) 通过键值对数组创建一个新对象。
+      ; (function () {
+        console.log('15.-------------------------------------------------------');
+        console.log('Object.fromEntries()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        let arr = Object.entries(obj)
+        let obj2 = Object.fromEntries(arr)
+        console.log(obj2);
+      }())
+      // 16.Object.preventExtensions(obj) 防止一个对象被添加新属性。 但是可以删除属性
+      ; (function () {
+        console.log('16.-------------------------------------------------------');
+        console.log('Object.preventExtensions()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.preventExtensions(obj)
+        delete obj.name
+        console.log(obj);
+      }())
+      // 17.Object.isExtensible(obj) 判断一个对象是否可以扩展（即，是否可以添加新属性）。
+      ; (function () {
+        console.log('17.-------------------------------------------------------');
+        console.log('Object.isExtensible()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.seal(obj)
+        console.log(Object.isExtensible(obj));
+      }())
+      // 18.Object.isSealed(obj) 判断一个对象是否被封闭（即，属性是否可以被修改）。
+      ; (function () {
+        console.log('18.-------------------------------------------------------');
+        console.log('Object.isSealed()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.freeze(obj)
+        console.log(Object.isSealed(obj));
+      }())
+      // 19.Object.isFrozen(obj) 判断一个对象是否被封闭（即，属性是否可以被修改）。
+      ; (function () {
+        console.log('19.-------------------------------------------------------');
+        console.log('Object.isFrozen()');
+        let obj = {
+          name: 'zxw',
+          age: 18,
+          [Symbol('realage')]: 45,
+          [Symbol('realage')]: 50
+        }
+        Object.seal(obj)
+        delete obj.name
+        console.log(Object.isFrozen(obj));
+      }())
+  </script>
+</body>
+
+</html>
