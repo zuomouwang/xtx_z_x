@@ -1,0 +1,8 @@
+# xtx_z_x
+# .nojekyll 文件内容
+# 禁用 Jekyll 特殊处理
+*.md
+*.html
+*.css
+*.js
+!assets/
