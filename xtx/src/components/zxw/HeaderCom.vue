@@ -65,18 +65,19 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 let timer = 0
 export default {
   data() {
     return {
       localStorage_time: undefined,
-      token: undefined,
+      token: '',
       account: undefined,
       user: undefined,
       myCar: undefined,
 
-      carNum: undefined,
-      carPrice: undefined,
+      carNum: 0,
+      carPrice: 0,
 
       status: [false, false, false, false, false, false, false, false, false],
       defdata: [
@@ -168,49 +169,83 @@ export default {
     },
     del(e, item) {
       let myCar = this.myCar
-      this.myCar.forEach(function (i, index) {
-        console.log(i)
-        if (i.id === item.id) {
-          myCar.splice(index, 1)
-          console.log(myCar)
-        }
-      })
-      this.myCar = myCar
-      localStorage.setItem('account', JSON.stringify(this.account))
+      let token = this.token
+      if (this.account.find(item => item.name === this.token)) {
+        this.myCar.forEach(function (i, index) {
+          if (i.id === item.id) {
+            myCar.splice(index, 1)
+            // ElMessage({
+            //   showClose: true,
+            //   message: '删除成功',
+            //   type: 'success'
+            // })
+          }
+        })
+        this.myCar = myCar
+        localStorage.setItem('account', JSON.stringify(this.account))
+      } else if (token.length <= 0) {
+        ElMessage({
+          showClose: true,
+          message: '请先登录.',
+          type: 'warning'
+        })
+      } else if (!this.account.find(item => item.name === this.token)) {
+        ElMessage({
+          showClose: true,
+          message: '登录失效',
+          type: 'warning'
+        })
+      }
     }
   },
   created() {},
   mounted() {
     console.log(location.hash)
     this.localStorage_time = setInterval(() => {
-      // if (
-      //   localStorage.getItem('token') === null ||
-      //   !JSON.parse(localStorage.getItem('account')) ||
-      //   !localStorage.getItem('user')
-      // ) {
-      //   localStorage.setItem('token', JSON.stringify(this.token))
-      //   localStorage.setItem('account', JSON.stringify(this.account))
-      //   localStorage.setItem('user', JSON.stringify(this.user))
-      // }
-      this.token = localStorage.getItem('token')
+      if (
+        localStorage.getItem('token') === null ||
+        !JSON.parse(localStorage.getItem('account')) ||
+        !localStorage.getItem('user')
+      ) {
+        localStorage.setItem('token', this.token)
+        localStorage.setItem('account', JSON.stringify(this.account))
+        localStorage.setItem('user', JSON.stringify(this.user))
+      }
+      // this.token = localStorage.getItem('token')
+      let token = localStorage.getItem('token')
       this.account = JSON.parse(localStorage.getItem('account'))
       this.user = JSON.parse(localStorage.getItem('user'))
-      this.myCar = this.account.find(item => item.name === this.token).cart
-      let num = 0
-      let price = 0
-      this.myCar.forEach(function (currentValue) {
-        num += currentValue.num
-        price += currentValue.price * currentValue.num
-      })
-      this.carNum = num
-      if (this.carNum === 0 || location.hash === '#/cart') {
-        const car = document.querySelector('.car')
-        car.style.opacity = 0
+      if (!this.account.find(item => item.name === token)) {
+        if (location.hash !== '#/login/1' && location.hash !== '#/login/2') {
+          const car = document.querySelector('.car')
+          car.style.opacity = 0
+        }
+        if (token === '') {
+          token = this.token
+        } else {
+          token = this.token
+          localStorage.setItem('token', this.token)
+        }
       } else {
-        const car = document.querySelector('.car')
-        car.style.opacity = 1
+        this.token = token
+        // console.log(this.token)
+        this.myCar = this.account.find(item => item.name === this.token).cart
+        let num = 0
+        let price = 0
+        this.myCar.forEach(function (currentValue) {
+          num += currentValue.num
+          price += currentValue.price * currentValue.num
+        })
+        this.carNum = num
+        if (this.carNum === 0 || location.hash === '#/cart') {
+          const car = document.querySelector('.car')
+          car.style.opacity = 0
+        } else {
+          const car = document.querySelector('.car')
+          car.style.opacity = 1
+        }
+        this.carPrice = price.toFixed(2)
       }
-      this.carPrice = price
     }, 10)
   },
   updated() {}

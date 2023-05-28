@@ -158,6 +158,7 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 export default {
   props: ['data', 'status'],
   data() {
@@ -331,8 +332,21 @@ export default {
       // console.log(localStorage.getItem('token').length)
       console.log(this.data)
       const token = localStorage.getItem('token')
+      const acc = JSON.parse(localStorage.getItem('account'))
       if (token.length <= 0) {
-        alert('未登录')
+        ElMessage({
+          showClose: true,
+          message: '请先登录.',
+          type: 'warning'
+        })
+        return
+      }
+      if (!acc.find(item => item.name === token)) {
+        ElMessage({
+          showClose: true,
+          message: '登录失效',
+          type: 'warning'
+        })
         return
       }
       if (this.style === undefined) {
@@ -366,7 +380,6 @@ export default {
       this.mes.num = this.num
       let num = this.num
       // console.log(this.mes)
-      let acc = JSON.parse(localStorage.getItem('account'))
       // acc[acc.findIndex(item => item.name === token)].cart = []
       // acc[acc.findIndex(item => item.name === token)].cart.splice(0,1)
       let same = false
@@ -377,6 +390,11 @@ export default {
           currentValue.address = address
           currentValue.num += num
           localStorage.setItem('account', JSON.stringify(acc))
+          ElMessage({
+            showClose: true,
+            message: '加入购物车成功',
+            type: 'success'
+          })
           same = true
         }
         // }
@@ -386,7 +404,12 @@ export default {
         return
       }
       my.cart.push(this.mes)
-      console.log(my === acc[1])
+      // console.log(my === acc[1])
+      ElMessage({
+        showClose: true,
+        message: '加入购物车成功',
+        type: 'success'
+      })
       localStorage.setItem('account', JSON.stringify(acc))
     }
   },
