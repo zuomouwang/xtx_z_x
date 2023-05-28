@@ -1,6 +1,6 @@
 <template>
   <div class="mes-container">
-    <a href="" v-for="item in data" :key="item.id">{{ item.name }}</a>
+    <a href="javascript:;" v-for="item in data" :key="item.id">{{ item.name }}</a>
   </div>
 </template>
 

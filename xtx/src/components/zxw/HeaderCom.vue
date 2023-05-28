@@ -75,6 +75,7 @@ export default {
       account: undefined,
       user: undefined,
       myCar: undefined,
+      now: undefined,
 
       carNum: 0,
       carPrice: 0,
@@ -200,7 +201,7 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(location.hash)
+    // console.log(location.hash)
     this.localStorage_time = setInterval(() => {
       if (
         localStorage.getItem('token') === null ||

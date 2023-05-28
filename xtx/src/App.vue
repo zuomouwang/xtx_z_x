@@ -20,7 +20,7 @@ export default {
     if (!localStorage.getItem('token')) {
       localStorage.setItem('token', '')
     }
-    console.log(localStorage.getItem('token') == '')
+    // console.log(localStorage.getItem('token') == '')
   }
 }
 </script>

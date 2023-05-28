@@ -3,17 +3,17 @@
     <div class="picture-container" ref="Picture">
       <div class="head">
         <div>
-          <a href="">首页</a>
+          <a href="#/Home">首页</a>
         </div>
         <i class="iconfont icon-arrow-right"></i>
         <div>
-          <a href="">
+          <a href="javascript:;">
             {{ this.data.categories[1].name }}
           </a>
         </div>
         <i class="iconfont icon-arrow-right"></i>
         <div>
-          <a href="">
+          <a href="javascript:;">
             {{ this.data.categories[0].name }}
           </a>
         </div>

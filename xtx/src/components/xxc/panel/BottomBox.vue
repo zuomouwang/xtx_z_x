@@ -82,7 +82,7 @@ export default {
     return {}
   },
   mounted() {
-    // console.log(this.data[0])
+    // console.log(this.data)
   },
   updated() {}
 }
